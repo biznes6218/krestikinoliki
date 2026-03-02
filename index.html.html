@@ -1,0 +1,784 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe Stars PRO</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            height: 100vh;
+            font-family: Arial;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background 0.6s ease;
+            background: #0f0f0f;
+        }
+
+        /* ===== ПРОФИЛЬ ===== */
+        #profileBox {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: #1c1c1c;
+            padding: 10px 15px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #000;
+            z-index: 100;
+        }
+
+        /* ===== КНОПКА МАГАЗИНА ===== */
+        #shopBtn {
+            position: absolute;
+            top: 15px;
+            right: 170px;
+            padding: 8px 12px;
+            background: #333;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+            #shopBtn:hover {
+                background: #555
+            }
+
+        /* ===== КНОПКА ВЫХОДА ===== */
+        #logoutBtn {
+            position: absolute;
+            top: 15px;
+            right: 280px;
+            padding: 8px 12px;
+            background: #8b0000;
+            border: none;
+            color: white;
+            border-radius: 10px;
+            cursor: pointer;
+            z-index: 100;
+        }
+
+            #logoutBtn:hover {
+                background: #a52a2a;
+            }
+
+        /* ===== МОДАЛКИ ===== */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modalContent {
+            background: #1c1c1c;
+            width: 550px;
+            max-height: 80vh;
+            overflow: auto;
+            padding: 25px;
+            border-radius: 15px;
+        }
+
+        .closeBtn {
+            float: right;
+            cursor: pointer;
+            font-size: 20px;
+        }
+
+        /* ===== ИСТОРИЯ ===== */
+        #matchHistoryBox {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 220px;
+            background: #1c1c1c;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #000;
+            max-height: 80vh;
+            overflow: auto;
+        }
+
+        .historyItem {
+            background: #111;
+            padding: 6px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 13px;
+        }
+
+        /* ===== ИГРА ===== */
+        .board {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3,100px);
+            grid-template-rows: repeat(3,100px);
+            gap: 5px;
+        }
+
+        .cell {
+            background: #1e1e1e;
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+            .cell:hover {
+                background: #2a2a2a
+            }
+
+        button {
+            margin-top: 5px;
+            padding: 6px 12px;
+            background: #333;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+            button:hover {
+                background: #555
+            }
+
+            button:disabled {
+                background: #444;
+                cursor: not-allowed;
+                opacity: 0.5;
+            }
+
+        .shopItem {
+            background: #111;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+        }
+
+        .shopPreview {
+            height: 60px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+
+        /* ===== ПРИВЕТСТВИЕ ===== */
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.98);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #welcomeBox {
+            background: #1c1c1c;
+            padding: 40px;
+            border-radius: 20px;
+            width: 400px;
+            text-align: center;
+            box-shadow: 0 0 30px #4a90e2;
+        }
+
+            #welcomeBox h2 {
+                margin-bottom: 20px;
+                color: #4a90e2;
+            }
+
+            #welcomeBox input {
+                width: 100%;
+                padding: 12px;
+                margin: 10px 0;
+                background: #333;
+                border: 2px solid #4a90e2;
+                color: white;
+                border-radius: 8px;
+                font-size: 16px;
+            }
+
+                #welcomeBox input:focus {
+                    outline: none;
+                    border-color: #6aa9ff;
+                }
+
+            #welcomeBox button {
+                width: 100%;
+                padding: 12px;
+                margin: 5px 0;
+                font-size: 16px;
+                background: #4a90e2;
+                border: none;
+                color: white;
+                border-radius: 8px;
+                cursor: pointer;
+            }
+
+                #welcomeBox button:hover {
+                    background: #357abd;
+                }
+
+                #welcomeBox button:last-child {
+                    background: #666;
+                }
+
+                    #welcomeBox button:last-child:hover {
+                        background: #555;
+                    }
+
+        #usernameError {
+            color: #ff6b6b;
+            font-size: 14px;
+            margin-top: 5px;
+            display: none;
+        }
+
+        #accountMessage {
+            color: #4a90e2;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+        /* ===== СТАТИСТИКА ===== */
+        .stats {
+            background: #111;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+        }
+
+        .statItem {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="welcomeOverlay">
+        <div id="welcomeBox">
+            <h2>🎮 Tic Tac Toe Stars</h2>
+            <p>Войдите в свой аккаунт</p>
+            <input type="text" id="tgUsernameInput" placeholder="@username" value="">
+            <div id="usernameError">Пожалуйста, введите username</div>
+            <div id="accountMessage"></div>
+            <button onclick="login()">🔑 Войти</button>
+            <button onclick="register()">✨ Зарегистрироваться</button>
+        </div>
+    </div>
+
+    <button id="logoutBtn" onclick="logout()">🚪 Выйти</button>
+    <button id="shopBtn" onclick="openShop()">🛒 Магазин</button>
+
+    <div id="profileBox" onclick="openProfile()">
+        <div id="userDisplay">👤 Загрузка...</div>
+        <div id="starsDisplay">⭐ 0</div>
+    </div>
+
+    <div id="matchHistoryBox">
+        <h3>📊 Последние матчи</h3>
+        <div id="matchHistory"></div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modalContent">
+            <div class="closeBtn" onclick="closeProfile()">✖</div>
+            <h2>👤 Профиль</h2>
+            <div class="stats">
+                <div class="statItem"><span>Telegram:</span> <span id="profileUsername"></span></div>
+                <div class="statItem"><span>Баланс:</span> <span id="modalStars">0 ⭐</span></div>
+                <div class="statItem"><span>Всего игр:</span> <span id="totalGames">0</span></div>
+                <div class="statItem"><span>Побед:</span> <span id="totalWins">0</span></div>
+                <div class="statItem"><span>Поражений:</span> <span id="totalLosses">0</span></div>
+                <div class="statItem"><span>Ничьих:</span> <span id="totalDraws">0</span></div>
+            </div>
+            <h3>📜 История выводов</h3>
+            <div id="withdrawHistory"></div>
+            <button onclick="withdraw()" id="withdrawBtn" style="width:100%;">💸 Вывести 100 ⭐</button>
+            <div id="withdrawTimer" style="text-align:center; margin-top:10px;"></div>
+        </div>
+    </div>
+
+    <div id="shopModal" class="modal">
+        <div class="modalContent">
+            <div class="closeBtn" onclick="closeShop()">✖</div>
+            <h2>🛍️ Магазин фонов</h2>
+            <div id="shopItems"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>❌ Крестики-Нолики ⭕</h2>
+        <div id="status">Твой ход (X)</div>
+        <div class="board" id="board"></div>
+        <button onclick="resetGame()">🔄 Новая игра</button>
+    </div>
+
+    <script>
+
+        /* ===== ДАННЫЕ ===== */
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let gameOver = false;
+
+        // Данные текущего игрока
+        let currentUser = null;
+        let stars = 0;
+        let matchHistory = [];
+        let withdrawHistory = [];
+        let withdrawEndTime = null;
+        let ownedBackgrounds = ["default"];
+        let equippedBackground = "default";
+        let stats = {
+            wins: 0,
+            losses: 0,
+            draws: 0
+        };
+
+        const backgrounds = [
+            { id: "default", name: "Стандарт", price: 0, style: "#0f0f0f" },
+            { id: "sunset", name: "Закат", price: 50, style: "linear-gradient(135deg,#ff512f,#dd2476)" },
+            { id: "ocean", name: "Океан", price: 80, style: "linear-gradient(135deg,#2193b0,#6dd5ed)" },
+            { id: "neon", name: "Неон", price: 120, style: "linear-gradient(135deg,#0f0c29,#302b63,#24243e)" },
+            { id: "galaxy", name: "Галактика", price: 150, style: "radial-gradient(circle,#1e3c72,#2a5298,#000)" }
+        ];
+
+        /* ===== СИСТЕМА АККАУНТОВ ===== */
+        function getAllUsers() {
+            let users = localStorage.getItem("allUsers");
+            return users ? JSON.parse(users) : {};
+        }
+
+        function saveAllUsers(users) {
+            localStorage.setItem("allUsers", JSON.stringify(users));
+        }
+
+        function login() {
+            let input = document.getElementById("tgUsernameInput");
+            let value = input.value.trim();
+            let errorDiv = document.getElementById("usernameError");
+            let messageDiv = document.getElementById("accountMessage");
+
+            if (value === "") {
+                errorDiv.style.display = "block";
+                input.style.borderColor = "#ff6b6b";
+                return;
+            }
+
+            // Добавляем @ если нет
+            if (!value.startsWith('@')) {
+                value = "@" + value;
+            }
+
+            let users = getAllUsers();
+
+            if (users[value]) {
+                // Пользователь существует - загружаем его данные
+                currentUser = value;
+                loadUserData(users[value]);
+
+                document.getElementById("welcomeOverlay").style.display = "none";
+                errorDiv.style.display = "none";
+                messageDiv.innerText = "";
+            } else {
+                // Пользователь не найден
+                messageDiv.innerText = "❌ Пользователь не найден. Зарегистрируйтесь!";
+                messageDiv.style.color = "#ff6b6b";
+            }
+        }
+
+        function register() {
+            let input = document.getElementById("tgUsernameInput");
+            let value = input.value.trim();
+            let errorDiv = document.getElementById("usernameError");
+            let messageDiv = document.getElementById("accountMessage");
+
+            if (value === "") {
+                errorDiv.style.display = "block";
+                input.style.borderColor = "#ff6b6b";
+                return;
+            }
+
+            // Добавляем @ если нет
+            if (!value.startsWith('@')) {
+                value = "@" + value;
+            }
+
+            let users = getAllUsers();
+
+            if (users[value]) {
+                // Пользователь уже существует
+                messageDiv.innerText = "❌ Такой пользователь уже существует! Войдите.";
+                messageDiv.style.color = "#ff6b6b";
+            } else {
+                // Создаем нового пользователя
+                currentUser = value;
+
+                // Создаем данные нового пользователя
+                let newUserData = {
+                    stars: 0,
+                    matchHistory: [],
+                    withdrawHistory: [],
+                    withdrawEndTime: null,
+                    ownedBackgrounds: ["default"],
+                    equippedBackground: "default",
+                    stats: { wins: 0, losses: 0, draws: 0 }
+                };
+
+                users[value] = newUserData;
+                saveAllUsers(users);
+
+                // Загружаем данные нового пользователя
+                loadUserData(newUserData);
+
+                document.getElementById("welcomeOverlay").style.display = "none";
+                errorDiv.style.display = "none";
+                messageDiv.innerText = "✅ Аккаунт создан! Добро пожаловать!";
+                messageDiv.style.color = "#4a90e2";
+            }
+        }
+
+        function loadUserData(userData) {
+            stars = userData.stars || 0;
+            matchHistory = userData.matchHistory || [];
+            withdrawHistory = userData.withdrawHistory || [];
+            withdrawEndTime = userData.withdrawEndTime || null;
+            ownedBackgrounds = userData.ownedBackgrounds || ["default"];
+            equippedBackground = userData.equippedBackground || "default";
+            stats = userData.stats || { wins: 0, losses: 0, draws: 0 };
+
+            // Обновляем отображение
+            document.getElementById("userDisplay").innerText = "👤 " + currentUser;
+            document.getElementById("profileUsername").innerText = currentUser;
+
+            applyBackground();
+            updateUI();
+            checkTimer();
+        }
+
+        function saveCurrentUser() {
+            if (!currentUser) return;
+
+            let users = getAllUsers();
+            users[currentUser] = {
+                stars: stars,
+                matchHistory: matchHistory,
+                withdrawHistory: withdrawHistory,
+                withdrawEndTime: withdrawEndTime,
+                ownedBackgrounds: ownedBackgrounds,
+                equippedBackground: equippedBackground,
+                stats: stats
+            };
+            saveAllUsers(users);
+        }
+
+        function logout() {
+            currentUser = null;
+            document.getElementById("welcomeOverlay").style.display = "flex";
+
+            // Очищаем поля ввода
+            document.getElementById("tgUsernameInput").value = "";
+            document.getElementById("accountMessage").innerText = "";
+
+            // Сбрасываем игру
+            resetGame();
+        }
+
+        /* ===== ОБНОВЛЕНИЕ UI ===== */
+        function updateUI() {
+            document.getElementById("starsDisplay").innerText = "⭐ " + stars;
+            document.getElementById("modalStars").innerText = stars + " ⭐";
+
+            // Обновляем статистику в профиле
+            document.getElementById("totalGames").innerText = stats.wins + stats.losses + stats.draws;
+            document.getElementById("totalWins").innerText = stats.wins;
+            document.getElementById("totalLosses").innerText = stats.losses;
+            document.getElementById("totalDraws").innerText = stats.draws;
+
+            // История матчей
+            let mh = document.getElementById("matchHistory");
+            mh.innerHTML = "";
+            matchHistory.slice(-10).reverse().forEach(m => {
+                let div = document.createElement("div");
+                div.className = "historyItem";
+                div.innerText = m;
+                mh.appendChild(div);
+            });
+
+            // История выводов
+            let wh = document.getElementById("withdrawHistory");
+            wh.innerHTML = "";
+            withdrawHistory.slice(-10).reverse().forEach(w => {
+                let div = document.createElement("div");
+                div.className = "historyItem";
+                div.innerText = w;
+                wh.appendChild(div);
+            });
+        }
+
+        /* ===== ИГРОВАЯ ЛОГИКА ===== */
+        function aiMove() {
+            let bestScore = -Infinity;
+            let moves = [];
+
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === "") {
+                    board[i] = "O";
+                    let score = minimax(board, false);
+                    board[i] = "";
+                    moves.push({ index: i, score });
+                    if (score > bestScore) bestScore = score;
+                }
+            }
+
+            let move;
+
+            if (Math.random() < 0.4) {
+                let emptyIndexes = moves.map(m => m.index);
+                move = emptyIndexes[Math.floor(Math.random() * emptyIndexes.length)];
+            } else {
+                move = moves.find(m => m.score === bestScore).index;
+            }
+
+            board[move] = "O";
+            createBoard();
+
+            if (checkWin("O")) { endGame("Поражение"); return; }
+            if (isDraw()) { endGame("Ничья"); }
+        }
+
+        function minimax(b, isMax) {
+            if (checkWinSim(b, "O")) return 10;
+            if (checkWinSim(b, "X")) return -10;
+            if (b.every(c => c !== "")) return 0;
+
+            if (isMax) {
+                let best = -Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (b[i] === "") {
+                        b[i] = "O";
+                        best = Math.max(best, minimax(b, false));
+                        b[i] = "";
+                    }
+                }
+                return best;
+            } else {
+                let best = Infinity;
+                for (let i = 0; i < 9; i++) {
+                    if (b[i] === "") {
+                        b[i] = "X";
+                        best = Math.min(best, minimax(b, true));
+                        b[i] = "";
+                    }
+                }
+                return best;
+            }
+        }
+
+        function playerMove(i) {
+            if (board[i] !== "" || gameOver || !currentUser) return;
+            board[i] = "X";
+            createBoard();
+            if (checkWin("X")) {
+                stars += 15;
+                endGame("Победа");
+                return;
+            }
+            if (isDraw()) { endGame("Ничья"); return; }
+            setTimeout(aiMove, 300);
+        }
+
+        function endGame(result) {
+            gameOver = true;
+            document.getElementById("status").innerText = result;
+
+            // Обновляем статистику
+            if (result === "Победа") {
+                stats.wins++;
+            } else if (result === "Поражение") {
+                stats.losses++;
+            } else if (result === "Ничья") {
+                stats.draws++;
+            }
+
+            matchHistory.push(result + " - " + new Date().toLocaleString());
+            saveCurrentUser();
+            updateUI();
+        }
+
+        function checkWin(p) { return checkWinSim(board, p); }
+
+        function checkWinSim(b, p) {
+            const w = [[0, 1, 2], [3, 4, 5], [6, 7, 8],
+            [0, 3, 6], [1, 4, 7], [2, 5, 8],
+            [0, 4, 8], [2, 4, 6]];
+            return w.some(c => c.every(i => b[i] == p));
+        }
+
+        function isDraw() { return board.every(c => c !== ""); }
+
+        function resetGame() {
+            board = ["", "", "", "", "", "", "", "", ""];
+            gameOver = false;
+            document.getElementById("status").innerText = "Твой ход (X)";
+            createBoard();
+        }
+
+        function createBoard() {
+            const boardEl = document.getElementById("board");
+            boardEl.innerHTML = "";
+            board.forEach((cell, i) => {
+                let div = document.createElement("div");
+                div.className = "cell";
+                div.innerText = cell;
+                div.onclick = () => playerMove(i);
+                boardEl.appendChild(div);
+            });
+        }
+
+        /* ===== МАГАЗИН ===== */
+        function openShop() {
+            document.getElementById("shopModal").style.display = "flex";
+            renderShop();
+        }
+
+        function closeShop() {
+            document.getElementById("shopModal").style.display = "none";
+        }
+
+        function renderShop() {
+            let container = document.getElementById("shopItems");
+            container.innerHTML = "";
+            backgrounds.forEach(bg => {
+                let div = document.createElement("div");
+                div.className = "shopItem";
+                div.innerHTML = `<div class="shopPreview" style="background:${bg.style}"></div>
+                <strong>${bg.name}</strong><br>Цена: ${bg.price} ⭐<br>`;
+                let btn = document.createElement("button");
+                if (ownedBackgrounds.includes(bg.id)) {
+                    btn.innerText = "✅ Экипировать";
+                    btn.onclick = () => equipBackground(bg.id);
+                } else {
+                    btn.innerText = "💎 Купить";
+                    btn.onclick = () => buyBackground(bg);
+                }
+                div.appendChild(btn);
+                container.appendChild(div);
+            });
+        }
+
+        function buyBackground(bg) {
+            if (stars < bg.price) return alert("❌ Недостаточно ⭐");
+            stars -= bg.price;
+            ownedBackgrounds.push(bg.id);
+            saveCurrentUser();
+            renderShop();
+            updateUI();
+        }
+
+        function equipBackground(id) {
+            equippedBackground = id;
+            applyBackground();
+            saveCurrentUser();
+            renderShop();
+        }
+
+        function applyBackground() {
+            let bg = backgrounds.find(b => b.id === equippedBackground);
+            document.body.style.background = bg.style;
+        }
+
+        /* ===== ВЫВОД СРЕДСТВ ===== */
+        function withdraw() {
+            if (stars < 100 || withdrawEndTime || !currentUser) return;
+            stars -= 100;
+            withdrawEndTime = Date.now() + 3 * 60 * 60 * 1000;
+            withdrawHistory.push("💸 Запрос 100 ⭐ - " + new Date().toLocaleString());
+            saveCurrentUser();
+            updateUI();
+            checkTimer();
+        }
+
+        function checkTimer() {
+            if (!withdrawEndTime) return;
+            const timerEl = document.getElementById("withdrawTimer");
+            const btn = document.getElementById("withdrawBtn");
+
+            function update() {
+                let diff = withdrawEndTime - Date.now();
+                if (diff <= 0) {
+                    withdrawEndTime = null;
+                    timerEl.innerText = "";
+                    btn.disabled = false;
+                    saveCurrentUser();
+                    return;
+                }
+                btn.disabled = true;
+                let h = Math.floor(diff / 1000 / 60 / 60);
+                let m = Math.floor((diff / 1000 / 60) % 60);
+                let s = Math.floor((diff / 1000) % 60);
+                timerEl.innerText = "⏳ Ожидание: " + h + "ч " + m + "м " + s + "с";
+                setTimeout(update, 1000);
+            }
+            update();
+        }
+
+        /* ===== ПРОФИЛЬ ===== */
+        function openProfile() {
+            if (currentUser) {
+                document.getElementById("profileModal").style.display = "flex";
+            }
+        }
+
+        function closeProfile() {
+            document.getElementById("profileModal").style.display = "none";
+        }
+
+        // Обработчик Enter
+        document.getElementById("tgUsernameInput").addEventListener("keypress", function (event) {
+            if (event.key === "Enter") {
+                login();
+            }
+        });
+
+        // Очищаем ошибку при вводе
+        document.getElementById("tgUsernameInput").addEventListener("input", function () {
+            let errorDiv = document.getElementById("usernameError");
+            let input = document.getElementById("tgUsernameInput");
+            errorDiv.style.display = "none";
+            input.style.borderColor = "#4a90e2";
+            document.getElementById("accountMessage").innerText = "";
+        });
+
+        // Создаем доску
+        createBoard();
+
+        // Проверяем, есть ли сохраненная сессия
+        let lastUser = localStorage.getItem("lastUser");
+        if (lastUser) {
+            let users = getAllUsers();
+            if (users[lastUser]) {
+                currentUser = lastUser;
+                loadUserData(users[lastUser]);
+                document.getElementById("welcomeOverlay").style.display = "none";
+            }
+        }
+
+    </script>
+</body>
+</html>
