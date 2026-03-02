@@ -1,0 +1,2305 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Tic Tac Toe Stars PRO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box
+        }
+
+        body {
+            height: 100vh;
+            font-family: 'Segoe UI', Arial, sans-serif;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f0f0f;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.2;
+            }
+
+            50% {
+                opacity: 1;
+            }
+        }
+
+        #profileBox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(28, 28, 28, 0.9);
+            backdrop-filter: blur(10px);
+            padding: 12px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            z-index: 100;
+            border: 1px solid #4a90e2;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: 0.3s;
+        }
+
+            #profileBox:hover {
+                border-color: #4a90e2;
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+            }
+
+        #userDisplay {
+            font-weight: bold;
+            background: #4a90e2;
+            padding: 5px 15px;
+            border-radius: 25px;
+            font-size: 14px;
+        }
+
+        #starsDisplay {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 16px;
+        }
+
+        #menuButtons {
+            position: absolute;
+            top: 20px;
+            right: 280px;
+            display: flex;
+            gap: 12px;
+            z-index: 100;
+        }
+
+        .menu-btn {
+            padding: 10px 18px;
+            background: rgba(51, 51, 51, 0.9);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+            .menu-btn:hover {
+                background: #4a90e2;
+                transform: translateY(-2px);
+                box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+            }
+
+            .menu-btn#logoutBtn {
+                background: rgba(139, 0, 0, 0.9);
+            }
+
+        #leaderboardBox {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 340px;
+            background: rgba(28, 28, 28, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #4a90e2;
+            z-index: 90;
+            max-height: 80vh;
+            overflow-y: auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        #leaderboardHeader {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+            #leaderboardHeader h3 {
+                color: #4a90e2;
+                font-size: 20px;
+                display: flex;
+                align-items: center;
+                gap: 10px;
+            }
+
+        .leaderboard-tabs {
+            display: flex;
+            gap: 5px;
+        }
+
+        .tab-btn {
+            padding: 5px 10px;
+            background: #333;
+            border: none;
+            color: white;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: 0.2s;
+        }
+
+            .tab-btn.active {
+                background: #4a90e2;
+            }
+
+        .leaderboard-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            margin: 5px 0;
+            background: rgba(17, 17, 17, 0.8);
+            border-radius: 12px;
+            transition: 0.2s;
+            border: 1px solid transparent;
+            cursor: pointer;
+        }
+
+            .leaderboard-item:hover {
+                border-color: #4a90e2;
+                transform: translateX(3px);
+                background: rgba(30, 30, 30, 0.9);
+            }
+
+            .leaderboard-item.top-1 {
+                background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
+                border: 2px solid gold;
+            }
+
+            .leaderboard-item.top-2 {
+                background: linear-gradient(135deg, rgba(192,192,192,0.2), rgba(192,192,192,0.05));
+                border: 2px solid silver;
+            }
+
+            .leaderboard-item.top-3 {
+                background: linear-gradient(135deg, rgba(205,127,50,0.2), rgba(205,127,50,0.05));
+                border: 2px solid #cd7f32;
+            }
+
+            .leaderboard-item.current-user {
+                border: 2px solid #4a90e2;
+                background: rgba(74, 144, 226, 0.1);
+            }
+
+            /* УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ ADMIN */
+            .leaderboard-item.admin-user {
+                background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(255,215,0,0.3));
+                border: 3px solid #ff0000;
+                box-shadow: 0 0 20px rgba(255,0,0,0.5);
+                animation: adminGlow 2s infinite;
+                position: relative;
+                overflow: hidden;
+            }
+
+                .leaderboard-item.admin-user::before {
+                    content: "👑";
+                    position: absolute;
+                    left: -10px;
+                    top: -10px;
+                    font-size: 30px;
+                    transform: rotate(-15deg);
+                    opacity: 0.5;
+                    animation: adminCrown 3s infinite;
+                }
+
+                .leaderboard-item.admin-user .rank {
+                    background: linear-gradient(135deg, #ff0000, #ffd700);
+                    color: white;
+                    font-size: 16px;
+                    box-shadow: 0 0 15px gold;
+                }
+
+        @keyframes adminGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255,215,0,0.8);
+            }
+        }
+
+        @keyframes adminCrown {
+            0%, 100% {
+                transform: rotate(-15deg) scale(1);
+            }
+
+            50% {
+                transform: rotate(-15deg) scale(1.2);
+            }
+        }
+
+        /* КРАСИВЫЙ СТИЛЬ ДЛЯ СТ. БРАТА АДМИНА */
+        .leaderboard-item.senior-brother {
+            background: linear-gradient(135deg, rgba(147,112,219,0.3), rgba(255,215,0,0.3), rgba(255,0,0,0.3));
+            border: 3px solid #9370db;
+            box-shadow: 0 0 20px rgba(147,112,219,0.5);
+            animation: seniorGlow 3s infinite;
+            position: relative;
+        }
+
+            .leaderboard-item.senior-brother::after {
+                content: "🤝⚡";
+                position: absolute;
+                right: -5px;
+                top: -10px;
+                font-size: 24px;
+                animation: seniorWave 2s infinite;
+                filter: drop-shadow(0 0 10px gold);
+            }
+
+            .leaderboard-item.senior-brother .rank {
+                background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);
+                color: white;
+                font-size: 16px;
+                box-shadow: 0 0 15px rgba(147,112,219,0.5);
+            }
+
+        @keyframes seniorGlow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(147,112,219,0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(255,215,0,0.6);
+            }
+        }
+
+        @keyframes seniorWave {
+            0%, 100% {
+                transform: rotate(0deg) scale(1);
+            }
+
+            25% {
+                transform: rotate(20deg) scale(1.2);
+            }
+
+            75% {
+                transform: rotate(-20deg) scale(1.2);
+            }
+        }
+
+        .rank {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #333;
+            border-radius: 50%;
+            font-weight: bold;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .top-1 .rank {
+            background: gold;
+            color: #000;
+        }
+
+        .top-2 .rank {
+            background: silver;
+            color: #000;
+        }
+
+        .top-3 .rank {
+            background: #cd7f32;
+            color: #000;
+        }
+
+        .player-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .player-name {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 2px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        .player-title {
+            font-size: 11px;
+            padding: 2px 8px;
+            border-radius: 12px;
+            background: #333;
+            white-space: nowrap;
+        }
+
+        .title-legend {
+            background: gold;
+            color: #000;
+        }
+
+        .title-hero {
+            background: silver;
+            color: #000;
+        }
+
+        .title-warrior {
+            background: #cd7f32;
+            color: #000;
+        }
+
+        /* УЛЬТРА КРУТОЙ ТИТУЛ ДЛЯ ADMIN */
+        .title-admin {
+            background: linear-gradient(135deg, #ff0000, #ffd700);
+            color: white;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            box-shadow: 0 0 10px rgba(255,0,0,0.5);
+            animation: titleGlow 1.5s infinite;
+            border: 1px solid gold;
+        }
+
+        /* КРАСИВЫЙ ТИТУЛ ДЛЯ СТ. БРАТА АДМИНА */
+        .title-senior-brother {
+            background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);
+            color: white;
+            font-weight: bold;
+            padding: 3px 12px;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(147,112,219,0.5);
+            animation: seniorTitleGlow 3s infinite;
+            border: 1px solid rgba(255,255,255,0.3);
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            gap: 3px;
+        }
+
+            .title-senior-brother::before {
+                content: "🤝⚡";
+                margin-right: 5px;
+                animation: seniorEmoji 2s infinite;
+                display: inline-block;
+            }
+
+        @keyframes seniorTitleGlow {
+            0%, 100% {
+                box-shadow: 0 0 15px rgba(147,112,219,0.5);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(255,215,0,0.7);
+            }
+        }
+
+        @keyframes seniorEmoji {
+            0%, 100% {
+                transform: rotate(0deg);
+            }
+
+            25% {
+                transform: rotate(15deg) scale(1.1);
+            }
+
+            75% {
+                transform: rotate(-15deg) scale(1.1);
+            }
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.8;
+                box-shadow: 0 0 20px gold;
+            }
+        }
+
+        .player-stats {
+            display: flex;
+            gap: 8px;
+            font-size: 11px;
+            color: #aaa;
+        }
+
+            .player-stats span {
+                display: flex;
+                align-items: center;
+                gap: 3px;
+            }
+
+        .player-score {
+            font-weight: bold;
+            color: #4a90e2;
+            font-size: 18px;
+            flex-shrink: 0;
+            min-width: 50px;
+            text-align: right;
+        }
+
+        .leaderboard-count {
+            text-align: center;
+            margin-top: 15px;
+            padding: 8px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 8px;
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        #matchHistoryBox {
+            position: absolute;
+            left: 390px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 240px;
+            background: rgba(28, 28, 28, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px;
+            border-radius: 20px;
+            border: 1px solid #4a90e2;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+            #matchHistoryBox h3 {
+                margin-bottom: 20px;
+                color: #4a90e2;
+                border-bottom: 1px solid #333;
+                padding-bottom: 10px;
+            }
+
+        .historyItem {
+            background: rgba(17, 17, 17, 0.8);
+            padding: 8px;
+            margin: 5px 0;
+            border-radius: 8px;
+            font-size: 12px;
+            border-left: 3px solid;
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 30px;
+            border: 1px solid #4a90e2;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+            .container h2 {
+                font-size: 28px;
+                margin-bottom: 15px;
+                background: linear-gradient(135deg, #fff, #4a90e2);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+            }
+
+        #status {
+            font-size: 18px;
+            margin-bottom: 15px;
+            color: #4a90e2;
+        }
+
+        .board {
+            margin-top: 15px;
+            display: grid;
+            grid-template-columns: repeat(3,100px);
+            grid-template-rows: repeat(3,100px);
+            gap: 8px;
+        }
+
+        .cell {
+            background: rgba(30, 30, 30, 0.9);
+            font-size: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: 15px;
+            height: 100px;
+            width: 100px;
+            border: 2px solid transparent;
+            transition: 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .cell:hover {
+                border-color: #4a90e2;
+                transform: scale(1.02);
+            }
+
+            /* Спецэффекты для клеток */
+            .cell.effect-fire {
+                animation: fireEffect 1.5s infinite;
+            }
+
+            .cell.effect-glow {
+                animation: glowEffect 2s infinite;
+            }
+
+            .cell.effect-rainbow {
+                animation: rainbowEffect 3s infinite;
+            }
+
+            .cell.effect-lightning {
+                animation: lightningEffect 2s infinite;
+            }
+
+            .cell.effect-neon {
+                animation: neonEffect 2.5s infinite;
+            }
+
+            .cell.effect-matrix {
+                animation: matrixEffect 1s infinite;
+            }
+
+        @keyframes fireEffect {
+            0%, 100% {
+                box-shadow: 0 0 10px #ff6b6b;
+            }
+
+            50% {
+                box-shadow: 0 0 30px #ff4500;
+            }
+        }
+
+        @keyframes glowEffect {
+            0%, 100% {
+                box-shadow: 0 0 15px #4a90e2;
+            }
+
+            50% {
+                box-shadow: 0 0 30px #4a90e2, 0 0 15px white;
+            }
+        }
+
+        @keyframes rainbowEffect {
+            0% {
+                box-shadow: 0 0 15px #ff0000;
+            }
+
+            25% {
+                box-shadow: 0 0 15px #00ff00;
+            }
+
+            50% {
+                box-shadow: 0 0 15px #0000ff;
+            }
+
+            75% {
+                box-shadow: 0 0 15px #ffff00;
+            }
+
+            100% {
+                box-shadow: 0 0 15px #ff00ff;
+            }
+        }
+
+        @keyframes lightningEffect {
+            0%, 100% {
+                box-shadow: 0 0 10px #ffff00;
+            }
+
+            10% {
+                box-shadow: 0 0 40px #ffff00, 0 0 20px white;
+            }
+        }
+
+        @keyframes neonEffect {
+            0%, 100% {
+                box-shadow: 0 0 15px #00ffff;
+            }
+
+            50% {
+                box-shadow: 0 0 30px #00ffff, 0 0 15px #ff00ff;
+            }
+        }
+
+        @keyframes matrixEffect {
+            0% {
+                box-shadow: 0 0 15px #00ff00;
+            }
+
+            50% {
+                box-shadow: 0 0 30px #00ff00, inset 0 0 15px #00ff00;
+            }
+        }
+
+        button {
+            margin-top: 20px;
+            padding: 12px 30px;
+            background: linear-gradient(135deg, #333, #444);
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 50px;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+            button:hover {
+                background: #4a90e2;
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+            }
+
+        #welcomeOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.98);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+        }
+
+        #welcomeBox {
+            background: rgba(28, 28, 28, 0.98);
+            padding: 50px;
+            border-radius: 30px;
+            width: 420px;
+            text-align: center;
+            border: 2px solid #4a90e2;
+            box-shadow: 0 30px 60px rgba(74, 144, 226, 0.3);
+        }
+
+            #welcomeBox h2 {
+                margin-bottom: 20px;
+                color: #4a90e2;
+                font-size: 32px;
+            }
+
+            #welcomeBox input {
+                width: 100%;
+                padding: 15px;
+                margin: 10px 0;
+                background: rgba(51, 51, 51, 0.9);
+                border: 2px solid #4a90e2;
+                color: white;
+                border-radius: 50px;
+                font-size: 16px;
+            }
+
+            #welcomeBox button {
+                width: 100%;
+                padding: 15px;
+                margin: 8px 0;
+                font-size: 16px;
+            }
+
+        #registerBtn {
+            background: linear-gradient(135deg, #27ae60, #2ecc71);
+        }
+
+        .modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modalContent {
+            background: rgba(28, 28, 28, 0.98);
+            padding: 30px;
+            border-radius: 25px;
+            width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 2px solid #4a90e2;
+        }
+
+        .closeBtn {
+            float: right;
+            cursor: pointer;
+            font-size: 24px;
+            color: #999;
+        }
+
+            .closeBtn:hover {
+                color: white;
+            }
+
+        .stats {
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 15px 0;
+        }
+
+        .statItem {
+            display: flex;
+            justify-content: space-between;
+            margin: 5px 0;
+            padding: 8px;
+            background: rgba(26, 26, 26, 0.9);
+            border-radius: 5px;
+        }
+
+        .shopCategory {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+            .shopCategory button {
+                flex: 1;
+                min-width: 80px;
+                margin-top: 0;
+            }
+
+                .shopCategory button.active {
+                    background: #4a90e2;
+                }
+
+        .shopItem {
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+            transition: 0.2s;
+        }
+
+            .shopItem:hover {
+                border-color: #4a90e2;
+            }
+
+        .shopPreview {
+            height: 70px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            background: #1e1e1e;
+            position: relative;
+        }
+
+        .item-rarity {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-left: 10px;
+        }
+
+        .rarity-common {
+            background: #808080;
+        }
+
+        .rarity-rare {
+            background: #4a90e2;
+        }
+
+        .rarity-epic {
+            background: #9b59b6;
+        }
+
+        .rarity-legendary {
+            background: #f1c40f;
+            color: #000;
+        }
+
+        .effect-preview {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .bet-input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            background: rgba(51, 51, 51, 0.9);
+            border: 2px solid #4a90e2;
+            color: white;
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .duel-info {
+            text-align: center;
+            margin: 15px 0;
+            padding: 15px;
+            background: rgba(74, 144, 226, 0.1);
+            border-radius: 10px;
+            border: 1px solid #4a90e2;
+        }
+
+        .duel-score {
+            display: flex;
+            justify-content: space-around;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+            .duel-score span {
+                background: #333;
+                padding: 10px 20px;
+                border-radius: 10px;
+            }
+
+            .duel-score .active {
+                background: #4a90e2;
+            }
+
+        .duel-waiting {
+            text-align: center;
+            padding: 20px;
+            color: #4a90e2;
+            font-size: 18px;
+        }
+
+        /* Кнопка пожертвований */
+        .donate-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #f7971e, #ffd200);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 215, 0, 0.4);
+            z-index: 1000;
+            transition: 0.3s;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+            .donate-btn:hover {
+                transform: scale(1.1);
+                box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+            }
+
+            .donate-btn i {
+                font-size: 28px;
+                color: #000;
+            }
+
+        .donate-modal {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 300px;
+            background: rgba(28, 28, 28, 0.98);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px;
+            border: 2px solid #4a90e2;
+            z-index: 1001;
+            display: none;
+            animation: slideIn 0.3s;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .donate-modal.active {
+            display: block;
+        }
+
+        .donate-modal h3 {
+            color: #4a90e2;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .donate-address {
+            background: rgba(17, 17, 17, 0.9);
+            padding: 15px;
+            border-radius: 10px;
+            margin: 10px 0;
+            word-break: break-all;
+            font-family: monospace;
+            font-size: 12px;
+            border: 1px solid #4a90e2;
+        }
+
+        .donate-qr {
+            width: 150px;
+            height: 150px;
+            margin: 15px auto;
+            display: block;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .donate-amounts {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            margin: 15px 0;
+        }
+
+        .donate-amount {
+            padding: 8px 15px;
+            background: #333;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+            .donate-amount:hover {
+                background: #4a90e2;
+            }
+
+        .donate-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #999;
+        }
+
+            .donate-close:hover {
+                color: white;
+            }
+
+        .copy-btn {
+            background: #4a90e2;
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+            width: 100%;
+        }
+
+            .copy-btn:hover {
+                background: #357abd;
+            }
+    </style>
+</head>
+<body>
+
+    <div class="stars" id="stars"></div>
+
+    <!-- Кнопка пожертвований -->
+    <div class="donate-btn" onclick="toggleDonateModal()">
+        <i>❤️</i>
+    </div>
+
+    <!-- Модальное окно пожертвований -->
+    <div class="donate-modal" id="donateModal">
+        <div class="donate-close" onclick="toggleDonateModal()">✖</div>
+        <h3>Поддержать проект</h3>
+        <div style="text-align: center; color: #ffd700; margin-bottom: 10px;">⚡ TON ⚡</div>
+        <div class="donate-address" id="tonAddress">UQCnW9n-sf7oqJGhqN91eSpJwqPZ7_dGKiYWJc1PIVCPcWEY</div>
+
+        <div style="text-align: center; margin: 15px 0;">
+            <img src="https://quickchart.io/qr?text=UQCnW9n-sf7oqJGhqN91eSpJwqPZ7_dGKiYWJc1PIVCPcWEY&size=200&margin=1&backgroundColor=white"
+                 alt="TON QR Code"
+                 class="donate-qr"
+                 onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMTUwIDE1MCI+PHJlY3Qgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmZmZmZmYiIC8+PHRleHQgeD0iMTUiIHk9Ijc1IiBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iTW9ub3RleHQsIEFyaWFsIiBmb250LXNpemU9IjEwIj5UT048L3RleHQ+PC9zdmc+'">
+        </div>
+
+        <div class="donate-amounts">
+            <span class="donate-amount" onclick="copyAddress()">1 TON</span>
+            <span class="donate-amount" onclick="copyAddress()">5 TON</span>
+            <span class="donate-amount" onclick="copyAddress()">10 TON</span>
+        </div>
+
+        <button class="copy-btn" onclick="copyAddress()">📋 Копировать адрес</button>
+
+        <p style="text-align: center; margin-top: 15px; font-size: 12px; color: #aaa;">
+            Спасибо за поддержку! ❤️
+        </p>
+    </div>
+
+    <div id="welcomeOverlay">
+        <div id="welcomeBox">
+            <h2>🎮 Tic Tac Toe Stars</h2>
+            <p>Введите данные для входа</p>
+            <input type="text" id="loginUsername" placeholder="@username" value="">
+            <input type="password" id="loginPassword" placeholder="4-значный пароль" maxlength="4">
+            <div id="authError" style="color: #ff6b6b; display: none;"></div>
+            <button onclick="handleLogin()">🔑 Войти</button>
+            <button id="registerBtn" onclick="handleRegister()">✨ Зарегистрироваться</button>
+        </div>
+    </div>
+
+    <div id="menuButtons">
+        <button class="menu-btn" id="shopBtn" onclick="openShop()">🛒 Магазин</button>
+        <button class="menu-btn" id="logoutBtn" onclick="logout()">🚪 Выйти</button>
+    </div>
+
+    <div id="profileBox" onclick="openProfile()">
+        <div id="userDisplay">👤 Загрузка...</div>
+        <div id="starsDisplay">⭐ 0</div>
+    </div>
+
+    <div id="leaderboardBox">
+        <div id="leaderboardHeader">
+            <h3>🏆 Топ игроков</h3>
+            <div class="leaderboard-tabs">
+                <button class="tab-btn active" onclick="switchLeaderboard('stars')" id="tabStars">⭐ Звезды</button>
+                <button class="tab-btn" onclick="switchLeaderboard('wins')" id="tabWins">🏆 Победы</button>
+            </div>
+        </div>
+        <div id="leaderboardList"></div>
+        <div class="leaderboard-count" id="leaderboardCount">Загрузка...</div>
+    </div>
+
+    <div id="matchHistoryBox">
+        <h3>📊 Последние матчи</h3>
+        <div id="matchHistory"></div>
+    </div>
+
+    <div id="profileModal" class="modal">
+        <div class="modalContent">
+            <div class="closeBtn" onclick="closeProfile()">✖</div>
+            <h2>👤 Профиль</h2>
+            <div class="stats">
+                <div class="statItem"><span>Username:</span> <span id="profileUsername"></span></div>
+                <div class="statItem"><span>Баланс:</span> <span id="modalStars">0 ⭐</span></div>
+                <div class="statItem"><span>Побед:</span> <span id="totalWins">0</span></div>
+                <div class="statItem"><span>Поражений:</span> <span id="totalLosses">0</span></div>
+                <div class="statItem"><span>Ничьих:</span> <span id="totalDraws">0</span></div>
+                <div class="statItem"><span>Место (⭐):</span> <span id="playerRankStars">-</span></div>
+                <div class="statItem"><span>Место (🏆):</span> <span id="playerRankWins">-</span></div>
+            </div>
+            <h3>📜 История выводов</h3>
+            <div id="withdrawHistory"></div>
+            <button onclick="withdraw()" id="withdrawBtn" style="width:100%; margin-top:10px;">💸 Вывести 100 ⭐</button>
+            <div id="withdrawTimer" style="text-align:center; margin-top:10px;"></div>
+        </div>
+    </div>
+
+    <!-- Модалка дуэли -->
+    <div id="duelModal" class="modal">
+        <div class="modalContent">
+            <div class="closeBtn" onclick="closeDuelModal()">✖</div>
+            <h2>⚔️ Дуэль</h2>
+            <div id="duelInfo" class="duel-info">
+                <p id="duelMessage"></p>
+            </div>
+
+            <div id="duelSetup" style="display: none;">
+                <p>Ставка (минимум 15 ⭐):</p>
+                <input type="number" id="betAmount" class="bet-input" value="15" min="15" step="1">
+                <p>До 3 побед</p>
+                <button onclick="sendDuelRequest()" style="width:100%; background: #4a90e2;">📨 Отправить вызов</button>
+            </div>
+
+            <div id="duelWaiting" style="display: none;" class="duel-waiting">
+                <p>⏳ Ожидание ответа...</p>
+                <p>Вызов отправлен</p>
+                <button onclick="cancelDuel()" style="background: #f44336;">❌ Отменить</button>
+            </div>
+
+            <div id="duelRequest" style="display: none;">
+                <p>Вам брошен вызов!</p>
+                <p>Игрок: <span id="challengerName"></span></p>
+                <p>Ставка: <span id="challengeBet"></span> ⭐</p>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <button onclick="acceptDuel()" style="flex:1; background: #4caf50;">✅ Принять</button>
+                    <button onclick="declineDuel()" style="flex:1; background: #f44336;">❌ Отклонить</button>
+                </div>
+            </div>
+
+            <div id="duelGame" style="display: none;">
+                <div class="duel-score">
+                    <span id="player1Score">0</span>
+                    <span>:</span>
+                    <span id="player2Score">0</span>
+                </div>
+                <div id="duelStatus" style="text-align:center; margin:10px 0;"></div>
+                <div class="board" id="duelBoard"></div>
+                <button onclick="leaveDuel()" style="width:100%; background: #f44336;">🏃 Сдаться</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="shopModal" class="modal">
+        <div class="modalContent">
+            <div class="closeBtn" onclick="closeShop()">✖</div>
+            <h2>🛍️ Магазин</h2>
+            <div class="shopCategory">
+                <button onclick="showCategory('background')" id="catBackground">Фоны</button>
+                <button onclick="showCategory('xskin')" id="catXskin">Скины X</button>
+                <button onclick="showCategory('oskin')" id="catOskin">Скины O</button>
+                <button onclick="showCategory('effect')" id="catEffect">Эффекты</button>
+            </div>
+            <div id="shopItems"></div>
+        </div>
+    </div>
+
+    <div class="container">
+        <h2>❌ Крестики-Нолики ⭕</h2>
+        <div id="status">Твой ход (X)</div>
+        <div class="board" id="board"></div>
+        <button onclick="resetGame()">🔄 Новая игра с AI</button>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+
+    <script>
+        // ВАША КОНФИГУРАЦИЯ FIREBASE
+        const firebaseConfig = {
+            apiKey: "AIzaSyDbStuT78ZanBoS3tdR3G86-t6mf9jmVdU",
+            authDomain: "krestiki-a8220.firebaseapp.com",
+            databaseURL: "https://krestiki-a8220-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "krestiki-a8220",
+            storageBucket: "krestiki-a8220.firebasestorage.app",
+            messagingSenderId: "850500600152",
+            appId: "1:850500600152:web:d21035c9f5d6be89da52d",
+            measurementId: "G-567L2T8WC2"
+        };
+
+        // Инициализация Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+
+        // Функция для копирования адреса
+        function copyAddress() {
+            const address = document.getElementById('tonAddress').innerText;
+            navigator.clipboard.writeText(address).then(() => {
+                alert('✅ Адрес скопирован!');
+            }).catch(() => {
+                alert('❌ Ошибка копирования');
+            });
+        }
+
+        // Функция для открытия/закрытия модалки пожертвований
+        function toggleDonateModal() {
+            const modal = document.getElementById('donateModal');
+            modal.classList.toggle('active');
+        }
+
+        // Закрытие модалки при клике вне её
+        document.addEventListener('click', function (event) {
+            const donateBtn = document.querySelector('.donate-btn');
+            const donateModal = document.getElementById('donateModal');
+
+            if (!donateBtn.contains(event.target) && !donateModal.contains(event.target)) {
+                donateModal.classList.remove('active');
+            }
+        });
+
+        // Создание звезд
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.width = Math.random() * 3 + 'px';
+                star.style.height = star.style.width;
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starsContainer.appendChild(star);
+            }
+        }
+        createStars();
+
+        // Данные
+        let currentUser = null;
+        let stars = 0;
+        let matchHistory = [];
+        let withdrawHistory = [];
+        let withdrawEndTime = null;
+        let ownedItems = ["default_bg", "default_x", "default_o"];
+        let equipped = {
+            background: "default_bg",
+            xskin: "default_x",
+            oskin: "default_o",
+            effect: null
+        };
+        let stats = { wins: 0, losses: 0, draws: 0 };
+        let board = ["", "", "", "", "", "", "", "", ""];
+        let gameOver = false;
+        let currentLeaderboardType = 'stars';
+
+        // Данные дуэли
+        let selectedOpponent = null;
+        let currentDuel = null;
+        let duelBoard = ["", "", "", "", "", "", "", "", ""];
+        let duelGameOver = false;
+        let duelPlayerSymbol = null;
+        let duelPlayer1Score = 0;
+        let duelPlayer2Score = 0;
+        let duelBet = 15;
+        let sentChallenge = null;
+
+        // Товары в магазине (много новых)
+        const shopItems = [
+            // Фоны (20+ вариантов)
+            { id: "default_bg", name: "Стандарт", category: "background", price: 0, rarity: "common", style: "#0f0f0f" },
+            { id: "sunset_bg", name: "Закат", category: "background", price: 50, rarity: "common", style: "linear-gradient(135deg,#ff512f,#dd2476)" },
+            { id: "ocean_bg", name: "Океан", category: "background", price: 80, rarity: "common", style: "linear-gradient(135deg,#2193b0,#6dd5ed)" },
+            { id: "neon_bg", name: "Неон", category: "background", price: 120, rarity: "rare", style: "linear-gradient(135deg,#0f0c29,#302b63,#24243e)" },
+            { id: "galaxy_bg", name: "Галактика", category: "background", price: 150, rarity: "rare", style: "radial-gradient(circle,#1e3c72,#2a5298,#000)" },
+            { id: "lava_bg", name: "Лава", category: "background", price: 200, rarity: "rare", style: "linear-gradient(135deg,#f12711,#f5af19)" },
+            { id: "forest_bg", name: "Лес", category: "background", price: 200, rarity: "rare", style: "linear-gradient(135deg,#134e5e,#71b280)" },
+            { id: "night_bg", name: "Ночь", category: "background", price: 250, rarity: "rare", style: "linear-gradient(135deg,#141e30,#243b55)" },
+            { id: "aurora_bg", name: "Северное сияние", category: "background", price: 300, rarity: "epic", style: "linear-gradient(135deg,#1a2980,#26d0ce)" },
+            { id: "cherry_bg", name: "Сакура", category: "background", price: 300, rarity: "epic", style: "linear-gradient(135deg,#f857a6,#ff5858)" },
+            { id: "royal_bg", name: "Королевский", category: "background", price: 350, rarity: "epic", style: "linear-gradient(135deg,#834d9b,#d04ed6)" },
+            { id: "cyber_bg", name: "Киберпанк", category: "background", price: 350, rarity: "epic", style: "linear-gradient(135deg,#00f260,#0575e6)" },
+            { id: "sunrise_bg", name: "Рассвет", category: "background", price: 400, rarity: "epic", style: "linear-gradient(135deg,#f2994a,#f2c94c)" },
+            { id: "deepsea_bg", name: "Глубина", category: "background", price: 400, rarity: "epic", style: "linear-gradient(135deg,#0f2027,#203a43,#2c5364)" },
+            { id: "candy_bg", name: "Конфета", category: "background", price: 450, rarity: "legendary", style: "linear-gradient(135deg,#d9afd9,#97d9e1)" },
+            { id: "rainbow_bg", name: "Радуга", category: "background", price: 500, rarity: "legendary", style: "linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4)" },
+            { id: "matrix_bg", name: "Матрица", category: "background", price: 500, rarity: "legendary", style: "linear-gradient(135deg,#0f0f0f,#0f0f0f), repeating-linear-gradient(0deg, #00ff00, #00ff00 2px, transparent 2px, transparent 4px)" },
+            { id: "space_bg", name: "Космос", category: "background", price: 600, rarity: "legendary", style: "radial-gradient(circle at 20% 30%, #1e3c72, #2a5298, #000)" },
+
+            // Скины для X (20+ вариантов)
+            { id: "default_x", name: "Классический X", category: "xskin", price: 0, rarity: "common", symbol: "❌" },
+            { id: "skull_x", name: "Череп", category: "xskin", price: 100, rarity: "common", symbol: "💀" },
+            { id: "sword_x", name: "Меч", category: "xskin", price: 150, rarity: "rare", symbol: "⚔️" },
+            { id: "crown_x", name: "Корона", category: "xskin", price: 200, rarity: "rare", symbol: "👑" },
+            { id: "dragon_x", name: "Дракон", category: "xskin", price: 250, rarity: "epic", symbol: "🐉" },
+            { id: "fire_x", name: "Огонь", category: "xskin", price: 300, rarity: "epic", symbol: "🔥" },
+            { id: "star_x", name: "Звезда", category: "xskin", price: 300, rarity: "epic", symbol: "⭐" },
+            { id: "heart_x", name: "Сердце", category: "xskin", price: 350, rarity: "epic", symbol: "❤️" },
+            { id: "cross_x", name: "Крест", category: "xskin", price: 350, rarity: "epic", symbol: "✝️" },
+            { id: "snow_x", name: "Снежинка", category: "xskin", price: 400, rarity: "legendary", symbol: "❄️" },
+            { id: "sun_x", name: "Солнце", category: "xskin", price: 400, rarity: "legendary", symbol: "☀️" },
+            { id: "moon_x", name: "Луна", category: "xskin", price: 400, rarity: "legendary", symbol: "🌙" },
+            { id: "skull_cross_x", name: "Череп с костями", category: "xskin", price: 450, rarity: "legendary", symbol: "☠️" },
+            { id: "alien_x", name: "Пришелец", category: "xskin", price: 450, rarity: "legendary", symbol: "👽" },
+            { id: "robot_x", name: "Робот", category: "xskin", price: 450, rarity: "legendary", symbol: "🤖" },
+            { id: "ghost_x", name: "Призрак", category: "xskin", price: 500, rarity: "legendary", symbol: "👻" },
+            { id: "pumpkin_x", name: "Тыква", category: "xskin", price: 500, rarity: "legendary", symbol: "🎃" },
+            { id: "bat_x", name: "Летучая мышь", category: "xskin", price: 500, rarity: "legendary", symbol: "🦇" },
+            { id: "spider_x", name: "Паук", category: "xskin", price: 500, rarity: "legendary", symbol: "🕷️" },
+
+            // Скины для O (20+ вариантов)
+            { id: "default_o", name: "Классический O", category: "oskin", price: 0, rarity: "common", symbol: "⭕" },
+            { id: "skull_o", name: "Череп", category: "oskin", price: 100, rarity: "common", symbol: "💀" },
+            { id: "shield_o", name: "Щит", category: "oskin", price: 150, rarity: "rare", symbol: "🛡️" },
+            { id: "crown_o", name: "Корона", category: "oskin", price: 200, rarity: "rare", symbol: "👑" },
+            { id: "dragon_o", name: "Дракон", category: "oskin", price: 250, rarity: "epic", symbol: "🐉" },
+            { id: "fire_o", name: "Огонь", category: "oskin", price: 300, rarity: "epic", symbol: "🔥" },
+            { id: "star_o", name: "Звезда", category: "oskin", price: 300, rarity: "epic", symbol: "⭐" },
+            { id: "heart_o", name: "Сердце", category: "oskin", price: 350, rarity: "epic", symbol: "❤️" },
+            { id: "circle_o", name: "Круг", category: "oskin", price: 350, rarity: "epic", symbol: "⚪" },
+            { id: "snow_o", name: "Снежинка", category: "oskin", price: 400, rarity: "legendary", symbol: "❄️" },
+            { id: "sun_o", name: "Солнце", category: "oskin", price: 400, rarity: "legendary", symbol: "☀️" },
+            { id: "moon_o", name: "Луна", category: "oskin", price: 400, rarity: "legendary", symbol: "🌕" },
+            { id: "earth_o", name: "Земля", category: "oskin", price: 450, rarity: "legendary", symbol: "🌍" },
+            { id: "alien_o", name: "Пришелец", category: "oskin", price: 450, rarity: "legendary", symbol: "👽" },
+            { id: "robot_o", name: "Робот", category: "oskin", price: 450, rarity: "legendary", symbol: "🤖" },
+            { id: "ghost_o", name: "Призрак", category: "oskin", price: 500, rarity: "legendary", symbol: "👻" },
+            { id: "pumpkin_o", name: "Тыква", category: "oskin", price: 500, rarity: "legendary", symbol: "🎃" },
+            { id: "bat_o", name: "Летучая мышь", category: "oskin", price: 500, rarity: "legendary", symbol: "🦇" },
+            { id: "spider_o", name: "Паук", category: "oskin", price: 500, rarity: "legendary", symbol: "🕷️" },
+            { id: "yin_yang_o", name: "Инь-Янь", category: "oskin", price: 550, rarity: "legendary", symbol: "☯️" },
+            { id: "infinity_o", name: "Бесконечность", category: "oskin", price: 550, rarity: "legendary", symbol: "♾️" },
+
+            // Спецэффекты (от 150 звезд)
+            { id: "effect_fire", name: "Огонь", category: "effect", price: 150, rarity: "rare", class: "effect-fire", preview: "🔥" },
+            { id: "effect_glow", name: "Свечение", category: "effect", price: 180, rarity: "rare", class: "effect-glow", preview: "✨" },
+            { id: "effect_rainbow", name: "Радуга", category: "effect", price: 220, rarity: "epic", class: "effect-rainbow", preview: "🌈" },
+            { id: "effect_lightning", name: "Молния", category: "effect", price: 250, rarity: "epic", class: "effect-lightning", preview: "⚡" },
+            { id: "effect_neon", name: "Неон", category: "effect", price: 300, rarity: "epic", class: "effect-neon", preview: "💫" },
+            { id: "effect_matrix", name: "Матрица", category: "effect", price: 350, rarity: "legendary", class: "effect-matrix", preview: "💚" }
+        ];
+
+        // Загрузка при старте
+        window.onload = function () {
+            let savedUser = localStorage.getItem('currentUser');
+            if (savedUser) {
+                currentUser = savedUser;
+                loadUserData();
+                document.getElementById('welcomeOverlay').style.display = 'none';
+            }
+            createBoard();
+            loadGlobalLeaderboard();
+            listenForChallenges();
+            listenForDuelGames();
+        };
+
+        // Слушаем вызовы на дуэль
+        function listenForChallenges() {
+            const challengesRef = database.ref('challenges');
+            challengesRef.on('child_added', (snapshot) => {
+                const challenge = snapshot.val();
+                if (challenge.to === currentUser && !currentDuel && !sentChallenge) {
+                    document.getElementById('challengerName').innerText = challenge.from;
+                    document.getElementById('challengeBet').innerText = challenge.bet;
+                    document.getElementById('duelSetup').style.display = 'none';
+                    document.getElementById('duelWaiting').style.display = 'none';
+                    document.getElementById('duelGame').style.display = 'none';
+                    document.getElementById('duelRequest').style.display = 'block';
+                    document.getElementById('duelMessage').innerText = 'Вам брошен вызов!';
+                    document.getElementById('duelModal').style.display = 'flex';
+
+                    currentDuel = {
+                        id: snapshot.key,
+                        from: challenge.from,
+                        bet: challenge.bet,
+                        status: 'pending'
+                    };
+                }
+            });
+        }
+
+        // Слушаем активные дуэли
+        function listenForDuelGames() {
+            const duelsRef = database.ref('duels');
+            duelsRef.on('child_added', (snapshot) => {
+                const duel = snapshot.val();
+                if ((duel.player1 === currentUser || duel.player2 === currentUser) && !currentDuel) {
+                    startDuelFromFirebase(duel, snapshot.key);
+                }
+            });
+
+            duelsRef.on('child_changed', (snapshot) => {
+                const duel = snapshot.val();
+                if (currentDuel && currentDuel.id === snapshot.key) {
+                    updateDuelFromFirebase(duel);
+                }
+            });
+        }
+
+        // Загрузка данных пользователя
+        function loadUserData() {
+            let savedStars = localStorage.getItem(currentUser + '_stars');
+            let savedHistory = localStorage.getItem(currentUser + '_history');
+            let savedWithdrawHistory = localStorage.getItem(currentUser + '_withdraw');
+            let savedWithdrawTime = localStorage.getItem(currentUser + '_withdrawTime');
+            let savedStats = localStorage.getItem(currentUser + '_stats');
+            let savedOwned = localStorage.getItem(currentUser + '_owned');
+            let savedEquipped = localStorage.getItem(currentUser + '_equipped');
+
+            stars = savedStars ? parseInt(savedStars) : 0;
+            matchHistory = savedHistory ? JSON.parse(savedHistory) : ['Добро пожаловать!'];
+            withdrawHistory = savedWithdrawHistory ? JSON.parse(savedWithdrawHistory) : [];
+            withdrawEndTime = savedWithdrawTime ? parseInt(savedWithdrawTime) : null;
+            stats = savedStats ? JSON.parse(savedStats) : { wins: 0, losses: 0, draws: 0 };
+            ownedItems = savedOwned ? JSON.parse(savedOwned) : ["default_bg", "default_x", "default_o"];
+            equipped = savedEquipped ? JSON.parse(savedEquipped) : { background: "default_bg", xskin: "default_x", oskin: "default_o", effect: null };
+
+            document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
+            document.getElementById('profileUsername').innerText = currentUser;
+            applyBackground();
+            applyEffect();
+            updateUI();
+            checkTimer();
+        }
+
+        // Сохранение данных пользователя
+        function saveUserData() {
+            if (!currentUser) return;
+            localStorage.setItem('currentUser', currentUser);
+            localStorage.setItem(currentUser + '_stars', stars);
+            localStorage.setItem(currentUser + '_history', JSON.stringify(matchHistory));
+            localStorage.setItem(currentUser + '_withdraw', JSON.stringify(withdrawHistory));
+            if (withdrawEndTime) {
+                localStorage.setItem(currentUser + '_withdrawTime', withdrawEndTime);
+            }
+            localStorage.setItem(currentUser + '_stats', JSON.stringify(stats));
+            localStorage.setItem(currentUser + '_owned', JSON.stringify(ownedItems));
+            localStorage.setItem(currentUser + '_equipped', JSON.stringify(equipped));
+
+            saveToFirebase();
+        }
+
+        // ===== FIREBASE: ОБЩАЯ ТАБЛИЦА ЛИДЕРОВ =====
+        function saveToFirebase() {
+            if (!currentUser) return;
+
+            database.ref('players/' + currentUser.replace('@', '')).set({
+                username: currentUser,
+                stars: stars,
+                wins: stats.wins
+            });
+        }
+
+        function loadGlobalLeaderboard() {
+            const playersRef = database.ref('players');
+
+            playersRef.on('value', (snapshot) => {
+                const data = snapshot.val();
+                const players = [];
+
+                for (let id in data) {
+                    players.push(data[id]);
+                }
+
+                updateLeaderboardDisplay(players);
+            });
+        }
+
+        function updateLeaderboardDisplay(players) {
+            if (currentLeaderboardType === 'stars') {
+                players.sort((a, b) => b.stars - a.stars);
+            } else {
+                players.sort((a, b) => b.wins - a.wins);
+            }
+
+            displayLeaderboard(players);
+
+            if (currentUser) {
+                let starsRank = [...players].sort((a, b) => b.stars - a.stars).findIndex(p => p.username === currentUser) + 1;
+                let winsRank = [...players].sort((a, b) => b.wins - a.wins).findIndex(p => p.username === currentUser) + 1;
+
+                document.getElementById('playerRankStars').innerText = starsRank ? `#${starsRank}` : '-';
+                document.getElementById('playerRankWins').innerText = winsRank ? `#${winsRank}` : '-';
+            }
+        }
+
+        function getPlayerTitle(username, rank) {
+            // УЛЬТРА КРУТОЙ ТИТУЛ ДЛЯ @Durov
+            if (username === '@Durov') {
+                return '<span class="player-title title-admin">👑 АДМИН 👑</span>';
+            }
+
+            // КРАСИВЫЙ ТИТУЛ ДЛЯ @test - СТ. БРАТ АДМИНА
+            if (username === '@test') {
+                return '<span class="player-title title-senior-brother">🤝⚡ СТ. БРАТ АДМИНА</span>';
+            }
+
+            if (rank === 0) return '<span class="player-title title-legend">👑 Легенда</span>';
+            if (rank === 1) return '<span class="player-title title-hero">⚔️ Герой</span>';
+            if (rank === 2) return '<span class="player-title title-warrior">🛡️ Воин</span>';
+            return '';
+        }
+
+        function switchLeaderboard(type) {
+            currentLeaderboardType = type;
+
+            document.getElementById('tabStars').className = 'tab-btn' + (type === 'stars' ? ' active' : '');
+            document.getElementById('tabWins').className = 'tab-btn' + (type === 'wins' ? ' active' : '');
+
+            const playersRef = database.ref('players');
+            playersRef.once('value', (snapshot) => {
+                const data = snapshot.val();
+                const players = [];
+
+                for (let id in data) {
+                    players.push(data[id]);
+                }
+
+                updateLeaderboardDisplay(players);
+            });
+        }
+
+        function displayLeaderboard(players) {
+            const list = document.getElementById('leaderboardList');
+            list.innerHTML = '';
+
+            players.slice(0, 50).forEach((player, index) => {
+                const div = document.createElement('div');
+                div.className = 'leaderboard-item';
+
+                if (index === 0) div.classList.add('top-1');
+                if (index === 1) div.classList.add('top-2');
+                if (index === 2) div.classList.add('top-3');
+
+                // УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ @Durov
+                if (player.username === '@Durov') {
+                    div.classList.add('admin-user');
+                }
+
+                // КРАСИВЫЙ СТИЛЬ ДЛЯ @test - СТ. БРАТ АДМИНА
+                if (player.username === '@test') {
+                    div.classList.add('senior-brother');
+                }
+
+                if (player.username === currentUser) div.classList.add('current-user');
+
+                div.onclick = () => openDuelModal(player.username);
+
+                const title = getPlayerTitle(player.username, index);
+                const displayValue = currentLeaderboardType === 'stars' ? player.stars : player.wins;
+
+                div.innerHTML = `
+                        <div class="rank">#${index + 1}</div>
+                        <div class="player-info">
+                            <div class="player-name">
+                                ${player.username}
+                                ${title}
+                            </div>
+                            <div class="player-stats">
+                                <span>⭐ ${player.stars || 0}</span>
+                                <span>🏆 ${player.wins || 0}</span>
+                            </div>
+                        </div>
+                        <div class="player-score">${displayValue}</div>
+                    `;
+
+                list.appendChild(div);
+            });
+
+            document.getElementById('leaderboardCount').innerText = `Всего игроков: ${players.length}`;
+        }
+
+        // ===== ДУЭЛИ =====
+        function openDuelModal(opponent) {
+            if (!currentUser) {
+                alert('Сначала войдите в аккаунт!');
+                return;
+            }
+
+            if (opponent === currentUser) {
+                alert('Нельзя вызвать самого себя!');
+                return;
+            }
+
+            selectedOpponent = opponent;
+            document.getElementById('duelMessage').innerText = `Вызов игроку: ${opponent}`;
+            document.getElementById('duelSetup').style.display = 'block';
+            document.getElementById('duelWaiting').style.display = 'none';
+            document.getElementById('duelRequest').style.display = 'none';
+            document.getElementById('duelGame').style.display = 'none';
+            document.getElementById('betAmount').value = 15;
+            document.getElementById('duelModal').style.display = 'flex';
+        }
+
+        function closeDuelModal() {
+            document.getElementById('duelModal').style.display = 'none';
+            selectedOpponent = null;
+            if (sentChallenge) {
+                database.ref('challenges/' + sentChallenge).remove();
+                sentChallenge = null;
+            }
+        }
+
+        function sendDuelRequest() {
+            let bet = parseInt(document.getElementById('betAmount').value);
+
+            if (bet < 15) {
+                alert('Минимальная ставка 15 ⭐');
+                return;
+            }
+
+            if (bet > stars) {
+                alert('Недостаточно ⭐');
+                return;
+            }
+
+            // Отправляем вызов в Firebase
+            const challengeRef = database.ref('challenges').push();
+            challengeRef.set({
+                from: currentUser,
+                to: selectedOpponent,
+                bet: bet,
+                timestamp: Date.now()
+            });
+
+            sentChallenge = challengeRef.key;
+
+            document.getElementById('duelSetup').style.display = 'none';
+            document.getElementById('duelWaiting').style.display = 'block';
+            document.getElementById('duelMessage').innerText = `Ожидание ответа от ${selectedOpponent}...`;
+        }
+
+        function cancelDuel() {
+            if (sentChallenge) {
+                database.ref('challenges/' + sentChallenge).remove();
+                sentChallenge = null;
+            }
+            closeDuelModal();
+        }
+
+        function acceptDuel() {
+            if (!currentDuel) return;
+
+            stars -= currentDuel.bet;
+
+            // Создаем дуэль в Firebase
+            const duelRef = database.ref('duels').push();
+            const duelId = duelRef.key;
+
+            const duelData = {
+                id: duelId,
+                player1: currentDuel.from,
+                player2: currentUser,
+                bet: currentDuel.bet,
+                player1Score: 0,
+                player2Score: 0,
+                currentGame: ["", "", "", "", "", "", "", "", ""],
+                turn: currentDuel.from,
+                status: 'active',
+                timestamp: Date.now()
+            };
+
+            duelRef.set(duelData);
+
+            database.ref('challenges/' + currentDuel.id).remove();
+
+            currentDuel = duelData;
+            currentDuel.id = duelId;
+
+            startDuelFromFirebase(duelData, duelId);
+        }
+
+        function declineDuel() {
+            if (currentDuel) {
+                database.ref('challenges/' + currentDuel.id).remove();
+                currentDuel = null;
+            }
+            closeDuelModal();
+        }
+
+        function startDuelFromFirebase(duelData, duelId) {
+            currentDuel = duelData;
+            currentDuel.id = duelId;
+
+            duelPlayerSymbol = currentUser === duelData.player1 ? 'X' : 'O';
+
+            document.getElementById('duelSetup').style.display = 'none';
+            document.getElementById('duelWaiting').style.display = 'none';
+            document.getElementById('duelRequest').style.display = 'none';
+            document.getElementById('duelGame').style.display = 'block';
+
+            document.getElementById('player1Score').innerText = duelData.player1Score;
+            document.getElementById('player2Score').innerText = duelData.player2Score;
+            document.getElementById('duelStatus').innerText =
+                `⚔️ ${duelData.player1} vs ${duelData.player2} | Ставка: ${duelData.bet} ⭐`;
+
+            document.getElementById('duelMessage').innerText = 'Дуэль началась!';
+            document.getElementById('duelModal').style.display = 'flex';
+
+            createDuelBoard();
+        }
+
+        function updateDuelFromFirebase(duelData) {
+            if (!currentDuel || currentDuel.id !== duelData.id) return;
+
+            currentDuel = duelData;
+
+            document.getElementById('player1Score').innerText = duelData.player1Score;
+            document.getElementById('player2Score').innerText = duelData.player2Score;
+
+            createDuelBoard();
+        }
+
+        function createDuelBoard() {
+            const boardEl = document.getElementById('duelBoard');
+            boardEl.innerHTML = '';
+            currentDuel.currentGame.forEach((cell, i) => {
+                let div = document.createElement('div');
+                div.className = 'cell';
+                if (cell === 'X') {
+                    div.innerText = getSymbol('X');
+                } else if (cell === 'O') {
+                    div.innerText = getSymbol('O');
+                } else {
+                    div.innerText = '';
+                }
+                if (equipped.effect) {
+                    let effect = shopItems.find(i => i.id === equipped.effect);
+                    if (effect) {
+                        div.classList.add(effect.class);
+                    }
+                }
+                div.onclick = () => duelMove(i);
+                boardEl.appendChild(div);
+            });
+        }
+
+        function duelMove(i) {
+            if (!currentDuel || currentDuel.currentGame[i] !== '') return;
+            if (currentDuel.turn !== currentUser) {
+                alert('Сейчас не ваш ход!');
+                return;
+            }
+
+            currentDuel.currentGame[i] = duelPlayerSymbol;
+
+            if (checkDuelWin(duelPlayerSymbol)) {
+                if (currentUser === currentDuel.player1) {
+                    currentDuel.player1Score++;
+                } else {
+                    currentDuel.player2Score++;
+                }
+
+                if (currentDuel.player1Score >= 2 || currentDuel.player2Score >= 2) {
+                    endDuel();
+                    return;
+                } else {
+                    currentDuel.currentGame = ["", "", "", "", "", "", "", "", ""];
+                    currentDuel.turn = currentDuel.player1;
+                }
+            } else if (currentDuel.currentGame.every(c => c !== '')) {
+                currentDuel.currentGame = ["", "", "", "", "", "", "", "", ""];
+                currentDuel.turn = currentDuel.player1;
+            } else {
+                currentDuel.turn = currentDuel.turn === currentDuel.player1 ? currentDuel.player2 : currentDuel.player1;
+            }
+
+            database.ref('duels/' + currentDuel.id).set(currentDuel);
+        }
+
+        function checkDuelWin(p) {
+            const wins = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return wins.some(combo => combo.every(i => currentDuel.currentGame[i] === p));
+        }
+
+        function endDuel() {
+            let winner = currentDuel.player1Score > currentDuel.player2Score ? currentDuel.player1 : currentDuel.player2;
+            let loser = winner === currentDuel.player1 ? currentDuel.player2 : currentDuel.player1;
+
+            if (winner === currentUser) {
+                stars += currentDuel.bet * 2;
+                stats.wins++;
+                matchHistory.push(`⚔️ Дуэль победа над ${loser} +${currentDuel.bet * 2}⭐ - ${new Date().toLocaleString()}`);
+            } else {
+                stats.losses++;
+                matchHistory.push(`⚔️ Дуэль поражение от ${winner} -${currentDuel.bet}⭐ - ${new Date().toLocaleString()}`);
+            }
+
+            alert(`⚔️ Дуэль окончена! Победитель: ${winner}`);
+
+            database.ref('duels/' + currentDuel.id).remove();
+            currentDuel = null;
+            saveUserData();
+            updateUI();
+            closeDuelModal();
+        }
+
+        function leaveDuel() {
+            if (confirm('Сдаться и проиграть ставку?')) {
+                stars -= currentDuel.bet;
+                stats.losses++;
+                matchHistory.push(`⚔️ Дуэль сдача -${currentDuel.bet}⭐ - ${new Date().toLocaleString()}`);
+
+                database.ref('duels/' + currentDuel.id).remove();
+                currentDuel = null;
+                saveUserData();
+                updateUI();
+                closeDuelModal();
+            }
+        }
+
+        // Регистрация
+        function handleRegister() {
+            let username = document.getElementById('loginUsername').value.trim();
+            let password = document.getElementById('loginPassword').value.trim();
+            let errorDiv = document.getElementById('authError');
+
+            if (!username || !password) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'Заполните все поля!';
+                return;
+            }
+
+            if (password.length !== 4 || isNaN(password)) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'Пароль должен быть 4 цифры!';
+                return;
+            }
+
+            if (!username.startsWith('@')) {
+                username = '@' + username;
+            }
+
+            let existingPass = localStorage.getItem('pass_' + username);
+            if (existingPass) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'Такой пользователь уже существует!';
+                return;
+            }
+
+            localStorage.setItem('pass_' + username, password);
+            currentUser = username;
+            stars = 0;
+            stats = { wins: 0, losses: 0, draws: 0 };
+            matchHistory = ['🎉 Аккаунт создан'];
+            withdrawHistory = [];
+            withdrawEndTime = null;
+            ownedItems = ["default_bg", "default_x", "default_o"];
+            equipped = { background: "default_bg", xskin: "default_x", oskin: "default_o", effect: null };
+
+            saveUserData();
+            document.getElementById('welcomeOverlay').style.display = 'none';
+            errorDiv.style.display = 'none';
+            document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
+            document.getElementById('profileUsername').innerText = currentUser;
+            applyBackground();
+            applyEffect();
+            updateUI();
+        }
+
+        // Вход
+        function handleLogin() {
+            let username = document.getElementById('loginUsername').value.trim();
+            let password = document.getElementById('loginPassword').value.trim();
+            let errorDiv = document.getElementById('authError');
+
+            if (!username || !password) {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'Заполните все поля!';
+                return;
+            }
+
+            if (!username.startsWith('@')) {
+                username = '@' + username;
+            }
+
+            let savedPass = localStorage.getItem('pass_' + username);
+            if (savedPass === password) {
+                currentUser = username;
+                loadUserData();
+                document.getElementById('welcomeOverlay').style.display = 'none';
+                errorDiv.style.display = 'none';
+                document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
+                document.getElementById('profileUsername').innerText = currentUser;
+            } else {
+                errorDiv.style.display = 'block';
+                errorDiv.innerText = 'Неверный username или пароль!';
+            }
+        }
+
+        // Выход
+        function logout() {
+            currentUser = null;
+            document.getElementById('welcomeOverlay').style.display = 'flex';
+            document.getElementById('loginUsername').value = '';
+            document.getElementById('loginPassword').value = '';
+            resetGame();
+        }
+
+        // Магазин
+        let currentCategory = 'background';
+
+        function openShop() {
+            document.getElementById('shopModal').style.display = 'flex';
+            showCategory('background');
+        }
+
+        function closeShop() {
+            document.getElementById('shopModal').style.display = 'none';
+        }
+
+        function showCategory(category) {
+            currentCategory = category;
+            document.getElementById('catBackground').className = '';
+            document.getElementById('catXskin').className = '';
+            document.getElementById('catOskin').className = '';
+            document.getElementById('catEffect').className = '';
+            document.getElementById('cat' + category.charAt(0).toUpperCase() + category.slice(1)).className = 'active';
+            renderShop();
+        }
+
+        function renderShop() {
+            let container = document.getElementById('shopItems');
+            container.innerHTML = '';
+
+            let filtered = shopItems.filter(item => item.category === currentCategory);
+
+            filtered.forEach(item => {
+                let div = document.createElement('div');
+                div.className = 'shopItem';
+
+                let rarityClass = 'rarity-' + item.rarity;
+
+                if (item.category === 'background') {
+                    div.innerHTML = `
+                            <div class="shopPreview" style="background:${item.style}"></div>
+                            <strong>${item.name}</strong>
+                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                            Цена: ${item.price} ⭐<br>
+                        `;
+                } else if (item.category === 'effect') {
+                    div.innerHTML = `
+                            <div class="shopPreview effect-preview ${item.class}">${item.preview}</div>
+                            <strong>${item.name}</strong>
+                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                            Цена: ${item.price} ⭐<br>
+                        `;
+                } else {
+                    div.innerHTML = `
+                            <div class="shopPreview">${item.symbol}</div>
+                            <strong>${item.name}</strong>
+                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                            Цена: ${item.price} ⭐<br>
+                        `;
+                }
+
+                let btn = document.createElement('button');
+
+                if (ownedItems.includes(item.id)) {
+                    if (equipped[item.category] === item.id) {
+                        btn.innerText = '✅ Экипировано';
+                        btn.disabled = true;
+                    } else {
+                        btn.innerText = '📦 Экипировать';
+                        btn.onclick = () => equipItem(item);
+                    }
+                } else {
+                    btn.innerText = '💎 Купить';
+                    btn.onclick = () => buyItem(item);
+                }
+
+                div.appendChild(btn);
+                container.appendChild(div);
+            });
+        }
+
+        function buyItem(item) {
+            if (stars < item.price) {
+                alert('❌ Недостаточно ⭐');
+                return;
+            }
+
+            stars -= item.price;
+            ownedItems.push(item.id);
+            saveUserData();
+            renderShop();
+            updateUI();
+            alert(`✅ Куплено: ${item.name}`);
+        }
+
+        function equipItem(item) {
+            equipped[item.category] = item.id;
+
+            if (item.category === 'background') {
+                applyBackground();
+            } else if (item.category === 'effect') {
+                applyEffect();
+                createBoard();
+            } else {
+                createBoard();
+            }
+
+            saveUserData();
+            renderShop();
+        }
+
+        function applyBackground() {
+            let bg = shopItems.find(i => i.id === equipped.background);
+            if (bg) {
+                document.body.style.background = bg.style;
+            }
+        }
+
+        function applyEffect() {
+            if (!equipped.effect) return;
+            let effect = shopItems.find(i => i.id === equipped.effect);
+            if (effect) {
+                document.querySelectorAll('.cell').forEach(cell => {
+                    cell.classList.add(effect.class);
+                });
+            }
+        }
+
+        // Игра с AI (теперь кружочки ходят первыми)
+        function getSymbol(player) {
+            if (player === 'X') {
+                let xskin = shopItems.find(i => i.id === equipped.xskin);
+                return xskin ? xskin.symbol : '❌';
+            } else {
+                let oskin = shopItems.find(i => i.id === equipped.oskin);
+                return oskin ? oskin.symbol : '⭕';
+            }
+        }
+
+        function createBoard() {
+            const boardEl = document.getElementById('board');
+            boardEl.innerHTML = '';
+            board.forEach((cell, i) => {
+                let div = document.createElement('div');
+                div.className = 'cell';
+                if (cell === 'X') {
+                    div.innerText = getSymbol('X');
+                } else if (cell === 'O') {
+                    div.innerText = getSymbol('O');
+                } else {
+                    div.innerText = '';
+                }
+                if (equipped.effect) {
+                    let effect = shopItems.find(i => i.id === equipped.effect);
+                    if (effect) {
+                        div.classList.add(effect.class);
+                    }
+                }
+                div.onclick = () => playerMove(i);
+                boardEl.appendChild(div);
+            });
+        }
+
+        function playerMove(i) {
+            if (board[i] !== '' || gameOver || !currentUser) return;
+
+            board[i] = 'X';
+            createBoard();
+
+            if (checkWin('X')) {
+                stars += 15;
+                stats.wins++;
+                endGame('Победа');
+                return;
+            }
+            if (isDraw()) {
+                stats.draws++;
+                endGame('Ничья');
+                return;
+            }
+            setTimeout(aiMove, 300);
+        }
+
+        function aiMove() {
+            let empty = [];
+            for (let i = 0; i < 9; i++) {
+                if (board[i] === '') empty.push(i);
+            }
+
+            if (empty.length === 0) return;
+
+            // AI теперь ходит вторым (O)
+            let symbol = 'O';
+
+            // 30% шанс на глупый ход
+            if (Math.random() < 0.3) {
+                let randomMove = empty[Math.floor(Math.random() * empty.length)];
+                board[randomMove] = symbol;
+                createBoard();
+                if (checkWin(symbol)) {
+                    stats.losses++;
+                    endGame('Поражение');
+                    return;
+                }
+                if (isDraw()) {
+                    stats.draws++;
+                    endGame('Ничья');
+                    return;
+                }
+                return;
+            }
+
+            // Проверка на победу AI
+            for (let move of empty) {
+                board[move] = symbol;
+                if (checkWin(symbol)) {
+                    createBoard();
+                    stats.losses++;
+                    endGame('Поражение');
+                    return;
+                }
+                board[move] = '';
+            }
+
+            // Блокировка победы игрока
+            for (let move of empty) {
+                board[move] = 'X';
+                if (checkWin('X')) {
+                    board[move] = symbol;
+                    createBoard();
+                    if (checkWin(symbol)) {
+                        stats.losses++;
+                        endGame('Поражение');
+                        return;
+                    }
+                    return;
+                }
+                board[move] = '';
+            }
+
+            // Стратегические ходы
+            let priorityMoves = [4, 0, 2, 6, 8, 1, 3, 5, 7];
+
+            for (let move of priorityMoves) {
+                if (board[move] === '') {
+                    board[move] = symbol;
+                    createBoard();
+                    if (checkWin(symbol)) {
+                        stats.losses++;
+                        endGame('Поражение');
+                        return;
+                    }
+                    if (isDraw()) {
+                        stats.draws++;
+                        endGame('Ничья');
+                        return;
+                    }
+                    return;
+                }
+            }
+        }
+
+        function checkWin(p) {
+            const wins = [
+                [0, 1, 2], [3, 4, 5], [6, 7, 8],
+                [0, 3, 6], [1, 4, 7], [2, 5, 8],
+                [0, 4, 8], [2, 4, 6]
+            ];
+            return wins.some(combo => combo.every(i => board[i] === p));
+        }
+
+        function isDraw() {
+            return board.every(c => c !== '');
+        }
+
+        function endGame(result) {
+            gameOver = true;
+            document.getElementById('status').innerText = result;
+            matchHistory.push(result + ' - ' + new Date().toLocaleString());
+            saveUserData();
+            updateUI();
+        }
+
+        function resetGame() {
+            board = ['', '', '', '', '', '', '', '', ''];
+            gameOver = false;
+            document.getElementById('status').innerText = 'Твой ход (X)';
+            createBoard();
+        }
+
+        // Профиль
+        function openProfile() {
+            if (currentUser) {
+                document.getElementById('profileModal').style.display = 'flex';
+                let wh = document.getElementById('withdrawHistory');
+                wh.innerHTML = '';
+                withdrawHistory.slice(-5).reverse().forEach(w => {
+                    let div = document.createElement('div');
+                    div.className = 'historyItem';
+                    div.innerText = w;
+                    wh.appendChild(div);
+                });
+            }
+        }
+
+        function closeProfile() {
+            document.getElementById('profileModal').style.display = 'none';
+        }
+
+        // Обновление UI
+        function updateUI() {
+            document.getElementById('starsDisplay').innerText = '⭐ ' + stars;
+            document.getElementById('modalStars').innerText = stars + ' ⭐';
+            document.getElementById('totalWins').innerText = stats.wins;
+            document.getElementById('totalLosses').innerText = stats.losses;
+            document.getElementById('totalDraws').innerText = stats.draws;
+
+            let mh = document.getElementById('matchHistory');
+            mh.innerHTML = '';
+            matchHistory.slice(-10).reverse().forEach(m => {
+                let div = document.createElement('div');
+                div.className = 'historyItem';
+                if (m.includes('Победа')) div.style.borderLeftColor = '#4caf50';
+                if (m.includes('Поражение')) div.style.borderLeftColor = '#f44336';
+                if (m.includes('Ничья')) div.style.borderLeftColor = '#ff9800';
+                if (m.includes('⚔️')) div.style.borderLeftColor = '#9b59b6';
+                div.innerText = m;
+                mh.appendChild(div);
+            });
+        }
+
+        // Вывод средств
+        function withdraw() {
+            if (!currentUser) return;
+            if (stars < 100) {
+                alert('❌ Недостаточно ⭐');
+                return;
+            }
+            if (withdrawEndTime && withdrawEndTime > Date.now()) {
+                alert('❌ Вывод уже запрошен!');
+                return;
+            }
+
+            stars -= 100;
+            withdrawEndTime = Date.now() + 3 * 60 * 60 * 1000;
+            withdrawHistory.push('💸 Запрос 100 ⭐ - ' + new Date().toLocaleString());
+            saveUserData();
+            updateUI();
+            checkTimer();
+
+            let wh = document.getElementById('withdrawHistory');
+            wh.innerHTML = '';
+            withdrawHistory.slice(-5).reverse().forEach(w => {
+                let div = document.createElement('div');
+                div.className = 'historyItem';
+                div.innerText = w;
+                wh.appendChild(div);
+            });
+        }
+
+        function checkTimer() {
+            if (!withdrawEndTime) return;
+
+            const timerEl = document.getElementById('withdrawTimer');
+            const btn = document.getElementById('withdrawBtn');
+
+            function update() {
+                let diff = withdrawEndTime - Date.now();
+                if (diff <= 0) {
+                    withdrawEndTime = null;
+                    timerEl.innerText = '';
+                    btn.disabled = false;
+                    saveUserData();
+                    return;
+                }
+                btn.disabled = true;
+                let h = Math.floor(diff / 1000 / 60 / 60);
+                let m = Math.floor((diff / 1000 / 60) % 60);
+                let s = Math.floor((diff / 1000) % 60);
+                timerEl.innerText = '⏳ Ожидание: ' + h + 'ч ' + m + 'м ' + s + 'с';
+                setTimeout(update, 1000);
+            }
+            update();
+        }
+    </script>
+</body>
+</html>
