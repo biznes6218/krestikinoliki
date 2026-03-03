@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Tic Tac Toe Stars PRO</title>
     <style>
+        /* Все стили остаются без изменений - копируем из вашего исходного кода */
         * {
             margin: 0;
             padding: 0;
@@ -115,7 +116,6 @@
             background: rgba(139, 0, 0, 0.9);
         }
 
-        /* Кнопка админ-панели (только для @Durov) */
         .menu-btn#adminBtn {
             background: linear-gradient(135deg, #ff0000, #ffd700);
             color: white;
@@ -222,7 +222,6 @@
             background: rgba(74, 144, 226, 0.1);
         }
 
-        /* УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ ADMIN */
         .leaderboard-item.admin-user {
             background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(255,215,0,0.3));
             border: 3px solid #ff0000;
@@ -260,7 +259,6 @@
             50% { transform: rotate(-15deg) scale(1.2); }
         }
 
-        /* КРАСИВЫЙ СТИЛЬ ДЛЯ СТ. БРАТА АДМИНА */
         .leaderboard-item.senior-brother {
             background: linear-gradient(135deg, rgba(147,112,219,0.3), rgba(255,215,0,0.3), rgba(255,0,0,0.3));
             border: 3px solid #9370db;
@@ -356,7 +354,6 @@
             color: #000;
         }
 
-        /* УЛЬТРА КРУТОЙ ТИТУЛ ДЛЯ ADMIN */
         .title-admin {
             background: linear-gradient(135deg, #ff0000, #ffd700);
             color: white;
@@ -368,7 +365,6 @@
             border: 1px solid gold;
         }
 
-        /* КРАСИВЫЙ ТИТУЛ ДЛЯ СТ. БРАТА АДМИНА */
         .title-senior-brother {
             background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);
             color: white;
@@ -593,7 +589,6 @@
             transform: scale(1.02);
         }
 
-        /* Спецэффекты для клеток */
         .cell.effect-fire {
             animation: fireEffect 1.5s infinite;
         }
@@ -966,7 +961,6 @@
             font-size: 18px;
         }
 
-        /* Меню победы */
         .victory-modal {
             position: fixed;
             top: 50%;
@@ -1026,7 +1020,6 @@
             box-shadow: 0 0 30px gold;
         }
 
-        /* Админ панель */
         .admin-panel {
             background: rgba(20, 20, 30, 0.98);
             border: 3px solid #ff0000;
@@ -1093,7 +1086,6 @@
             margin: 10px 0;
         }
 
-        /* Кнопка пожертвований */
         .donate-btn {
             position: fixed;
             bottom: 30px;
@@ -1662,6 +1654,8 @@
             loadGlobalLeaderboard();
             listenForChallenges();
             listenForDuelGames();
+            // Добавляем слушатель для обновлений игроков в реальном времени
+            listenForPlayerUpdates();
         };
 
         // Загрузка титулов
@@ -1717,6 +1711,75 @@
                     updateDuelFromFirebase(duel);
                 }
             });
+        }
+
+        // Слушатель для обновлений игроков в реальном времени
+        function listenForPlayerUpdates() {
+            const playersRef = database.ref('players');
+            
+            playersRef.on('child_changed', (snapshot) => {
+                const playerData = snapshot.val();
+                const username = '@' + snapshot.key;
+                
+                // Если это текущий пользователь - обновляем локальные данные
+                if (username === currentUser) {
+                    let oldStars = stars;
+                    stars = playerData.stars || 0;
+                    stats.wins = playerData.wins || 0;
+                    
+                    // Если звезды изменились - показываем уведомление
+                    if (oldStars !== stars) {
+                        if (stars > oldStars) {
+                            showNotification(`✨ Получено +${stars - oldStars} ⭐`);
+                        }
+                    }
+                    
+                    // Обновляем localStorage
+                    localStorage.setItem(currentUser + '_stars', stars);
+                    localStorage.setItem(currentUser + '_stats', JSON.stringify(stats));
+                    
+                    updateUI();
+                }
+                
+                // Обновляем таблицу лидеров
+                loadGlobalLeaderboard();
+            });
+            
+            playersRef.on('child_added', (snapshot) => {
+                // Новый игрок - обновляем таблицу
+                loadGlobalLeaderboard();
+            });
+            
+            playersRef.on('child_removed', (snapshot) => {
+                // Игрок удален - обновляем таблицу
+                loadGlobalLeaderboard();
+            });
+        }
+
+        // Показать уведомление
+        function showNotification(message) {
+            // Создаем простое уведомление
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.left = '50%';
+            notification.style.transform = 'translateX(-50%)';
+            notification.style.background = 'linear-gradient(135deg, #4a90e2, #9b59b6)';
+            notification.style.color = 'white';
+            notification.style.padding = '15px 30px';
+            notification.style.borderRadius = '50px';
+            notification.style.zIndex = '9999';
+            notification.style.fontSize = '18px';
+            notification.style.fontWeight = 'bold';
+            notification.style.boxShadow = '0 10px 30px rgba(74,144,226,0.5)';
+            notification.style.animation = 'slideDown 0.3s';
+            notification.innerText = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
         }
 
         // ===== ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ =====
@@ -1816,6 +1879,9 @@
             applyEffect();
             updateUI();
             checkTimer();
+            
+            // Синхронизируем с Firebase при загрузке
+            saveToFirebase();
         }
 
         // Сохранение данных пользователя
@@ -1849,7 +1915,7 @@
         function loadGlobalLeaderboard() {
             const playersRef = database.ref('players');
             
-            playersRef.on('value', (snapshot) => {
+            playersRef.once('value', (snapshot) => {
                 const data = snapshot.val();
                 const players = [];
                 
@@ -2352,30 +2418,33 @@
             // Обновляем в Firebase
             database.ref('players/' + username.replace('@', '')).update({
                 stars: newStars,
-                wins: newWins
+                wins: newWins !== undefined ? newWins : database.ref('players/' + username.replace('@', '') + '/wins').once('value').then(snapshot => snapshot.val() || 0)
+            }).then(() => {
+                // Обновляем в localStorage для всех пользователей
+                let users = getAllUsers();
+                if (users[username]) {
+                    users[username].stars = newStars;
+                    if (newWins !== undefined) {
+                        users[username].stats.wins = newWins;
+                    }
+                    saveAllUsers(users);
+                }
+                
+                // Если это текущий пользователь - обновляем локальные данные
+                if (username === currentUser) {
+                    stars = newStars;
+                    if (newWins !== undefined) {
+                        stats.wins = newWins;
+                    }
+                    updateUI();
+                }
+                
+                // Обновляем таблицу лидеров
+                loadGlobalLeaderboard();
+                
+                // Показываем уведомление
+                alert(`✅ Баланс игрока ${username} обновлен до ${newStars} ⭐`);
             });
-            
-            // Обновляем в localStorage для всех пользователей
-            let users = getAllUsers();
-            if (users[username]) {
-                users[username].stars = newStars;
-                if (newWins !== undefined) {
-                    users[username].stats.wins = newWins;
-                }
-                saveAllUsers(users);
-            }
-            
-            // Если это текущий пользователь - обновляем локальные данные
-            if (username === currentUser) {
-                stars = newStars;
-                if (newWins !== undefined) {
-                    stats.wins = newWins;
-                }
-                updateUI();
-            }
-            
-            // Обновляем таблицу лидеров
-            loadGlobalLeaderboard();
         }
 
         function adminAddStars() {
@@ -2395,7 +2464,15 @@
                 // Синхронизируем через Firebase
                 syncUserDataToFirebase(username, newStars, users[username].stats?.wins);
                 
-                alert(`✅ Добавлено ${amount} ⭐ игроку ${username}`);
+                // Добавляем запись в историю для игрока
+                if (username !== currentUser) {
+                    database.ref('players/' + username.replace('@', '') + '/lastTransaction').set({
+                        type: 'admin_add',
+                        amount: amount,
+                        admin: currentUser,
+                        timestamp: Date.now()
+                    });
+                }
             }
         }
 
@@ -2415,8 +2492,6 @@
                 
                 // Синхронизируем через Firebase
                 syncUserDataToFirebase(username, newStars, users[username].stats?.wins);
-                
-                alert(`✅ Забрано ${amount} ⭐ у игрока ${username}`);
             }
         }
 
@@ -2434,8 +2509,6 @@
             if (users[username]) {
                 // Синхронизируем через Firebase
                 syncUserDataToFirebase(username, amount, users[username].stats?.wins);
-                
-                alert(`✅ Установлено ${amount} ⭐ для игрока ${username}`);
             }
         }
 
