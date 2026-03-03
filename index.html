@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -40,13 +40,8 @@
         }
 
         @keyframes twinkle {
-            0%, 100% {
-                opacity: 0.2;
-            }
-
-            50% {
-                opacity: 1;
-            }
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
         }
 
         #profileBox {
@@ -66,11 +61,11 @@
             transition: 0.3s;
         }
 
-            #profileBox:hover {
-                border-color: #4a90e2;
-                transform: translateY(-2px);
-                box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
-            }
+        #profileBox:hover {
+            border-color: #4a90e2;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(74, 144, 226, 0.3);
+        }
 
         #userDisplay {
             font-weight: bold;
@@ -110,33 +105,28 @@
             outline: none;
         }
 
-            .menu-btn:hover {
-                background: #4a90e2;
-                transform: translateY(-2px);
-                box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
-            }
+        .menu-btn:hover {
+            background: #4a90e2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(74, 144, 226, 0.4);
+        }
 
-            .menu-btn#logoutBtn {
-                background: rgba(139, 0, 0, 0.9);
-            }
+        .menu-btn#logoutBtn {
+            background: rgba(139, 0, 0, 0.9);
+        }
 
-            /* Кнопка админ-панели (только для @Durov) */
-            .menu-btn#adminBtn {
-                background: linear-gradient(135deg, #ff0000, #ffd700);
-                color: white;
-                font-weight: bold;
-                animation: adminBtnGlow 2s infinite;
-                display: none;
-            }
+        /* Кнопка админ-панели (только для @Durov) */
+        .menu-btn#adminBtn {
+            background: linear-gradient(135deg, #ff0000, #ffd700);
+            color: white;
+            font-weight: bold;
+            animation: adminBtnGlow 2s infinite;
+            display: none;
+        }
 
         @keyframes adminBtnGlow {
-            0%, 100% {
-                box-shadow: 0 0 10px rgba(255,0,0,0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 20px rgba(255,215,0,0.8);
-            }
+            0%, 100% { box-shadow: 0 0 10px rgba(255,0,0,0.5); }
+            50% { box-shadow: 0 0 20px rgba(255,215,0,0.8); }
         }
 
         #leaderboardBox {
@@ -165,13 +155,13 @@
             padding-bottom: 10px;
         }
 
-            #leaderboardHeader h3 {
-                color: #4a90e2;
-                font-size: 20px;
-                display: flex;
-                align-items: center;
-                gap: 10px;
-            }
+        #leaderboardHeader h3 {
+            color: #4a90e2;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
 
         .leaderboard-tabs {
             display: flex;
@@ -189,9 +179,9 @@
             transition: 0.2s;
         }
 
-            .tab-btn.active {
-                background: #4a90e2;
-            }
+        .tab-btn.active {
+            background: #4a90e2;
+        }
 
         .leaderboard-item {
             display: flex;
@@ -206,78 +196,68 @@
             cursor: pointer;
         }
 
-            .leaderboard-item:hover {
-                border-color: #4a90e2;
-                transform: translateX(3px);
-                background: rgba(30, 30, 30, 0.9);
-            }
+        .leaderboard-item:hover {
+            border-color: #4a90e2;
+            transform: translateX(3px);
+            background: rgba(30, 30, 30, 0.9);
+        }
 
-            .leaderboard-item.top-1 {
-                background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
-                border: 2px solid gold;
-            }
+        .leaderboard-item.top-1 {
+            background: linear-gradient(135deg, rgba(255,215,0,0.2), rgba(255,215,0,0.05));
+            border: 2px solid gold;
+        }
 
-            .leaderboard-item.top-2 {
-                background: linear-gradient(135deg, rgba(192,192,192,0.2), rgba(192,192,192,0.05));
-                border: 2px solid silver;
-            }
+        .leaderboard-item.top-2 {
+            background: linear-gradient(135deg, rgba(192,192,192,0.2), rgba(192,192,192,0.05));
+            border: 2px solid silver;
+        }
 
-            .leaderboard-item.top-3 {
-                background: linear-gradient(135deg, rgba(205,127,50,0.2), rgba(205,127,50,0.05));
-                border: 2px solid #cd7f32;
-            }
+        .leaderboard-item.top-3 {
+            background: linear-gradient(135deg, rgba(205,127,50,0.2), rgba(205,127,50,0.05));
+            border: 2px solid #cd7f32;
+        }
 
-            .leaderboard-item.current-user {
-                border: 2px solid #4a90e2;
-                background: rgba(74, 144, 226, 0.1);
-            }
+        .leaderboard-item.current-user {
+            border: 2px solid #4a90e2;
+            background: rgba(74, 144, 226, 0.1);
+        }
 
-            /* УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ ADMIN */
-            .leaderboard-item.admin-user {
-                background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(255,215,0,0.3));
-                border: 3px solid #ff0000;
-                box-shadow: 0 0 20px rgba(255,0,0,0.5);
-                animation: adminGlow 2s infinite;
-                position: relative;
-                overflow: hidden;
-            }
+        /* УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ ADMIN */
+        .leaderboard-item.admin-user {
+            background: linear-gradient(135deg, rgba(255,0,0,0.3), rgba(255,215,0,0.3));
+            border: 3px solid #ff0000;
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+            animation: adminGlow 2s infinite;
+            position: relative;
+            overflow: hidden;
+        }
 
-                .leaderboard-item.admin-user::before {
-                    content: "👑";
-                    position: absolute;
-                    left: -10px;
-                    top: -10px;
-                    font-size: 30px;
-                    transform: rotate(-15deg);
-                    opacity: 0.5;
-                    animation: adminCrown 3s infinite;
-                }
+        .leaderboard-item.admin-user::before {
+            content: "👑";
+            position: absolute;
+            left: -10px;
+            top: -10px;
+            font-size: 30px;
+            transform: rotate(-15deg);
+            opacity: 0.5;
+            animation: adminCrown 3s infinite;
+        }
 
-                .leaderboard-item.admin-user .rank {
-                    background: linear-gradient(135deg, #ff0000, #ffd700);
-                    color: white;
-                    font-size: 16px;
-                    box-shadow: 0 0 15px gold;
-                }
+        .leaderboard-item.admin-user .rank {
+            background: linear-gradient(135deg, #ff0000, #ffd700);
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 0 15px gold;
+        }
 
         @keyframes adminGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(255,0,0,0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 40px rgba(255,215,0,0.8);
-            }
+            0%, 100% { box-shadow: 0 0 20px rgba(255,0,0,0.5); }
+            50% { box-shadow: 0 0 40px rgba(255,215,0,0.8); }
         }
 
         @keyframes adminCrown {
-            0%, 100% {
-                transform: rotate(-15deg) scale(1);
-            }
-
-            50% {
-                transform: rotate(-15deg) scale(1.2);
-            }
+            0%, 100% { transform: rotate(-15deg) scale(1); }
+            50% { transform: rotate(-15deg) scale(1.2); }
         }
 
         /* КРАСИВЫЙ СТИЛЬ ДЛЯ СТ. БРАТА АДМИНА */
@@ -289,45 +269,32 @@
             position: relative;
         }
 
-            .leaderboard-item.senior-brother::after {
-                content: "🤝⚡";
-                position: absolute;
-                right: -5px;
-                top: -10px;
-                font-size: 24px;
-                animation: seniorWave 2s infinite;
-                filter: drop-shadow(0 0 10px gold);
-            }
+        .leaderboard-item.senior-brother::after {
+            content: "🤝⚡";
+            position: absolute;
+            right: -5px;
+            top: -10px;
+            font-size: 24px;
+            animation: seniorWave 2s infinite;
+            filter: drop-shadow(0 0 10px gold);
+        }
 
-            .leaderboard-item.senior-brother .rank {
-                background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);
-                color: white;
-                font-size: 16px;
-                box-shadow: 0 0 15px rgba(147,112,219,0.5);
-            }
+        .leaderboard-item.senior-brother .rank {
+            background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);
+            color: white;
+            font-size: 16px;
+            box-shadow: 0 0 15px rgba(147,112,219,0.5);
+        }
 
         @keyframes seniorGlow {
-            0%, 100% {
-                box-shadow: 0 0 20px rgba(147,112,219,0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 40px rgba(255,215,0,0.6);
-            }
+            0%, 100% { box-shadow: 0 0 20px rgba(147,112,219,0.5); }
+            50% { box-shadow: 0 0 40px rgba(255,215,0,0.6); }
         }
 
         @keyframes seniorWave {
-            0%, 100% {
-                transform: rotate(0deg) scale(1);
-            }
-
-            25% {
-                transform: rotate(20deg) scale(1.2);
-            }
-
-            75% {
-                transform: rotate(-20deg) scale(1.2);
-            }
+            0%, 100% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(20deg) scale(1.2); }
+            75% { transform: rotate(-20deg) scale(1.2); }
         }
 
         .rank {
@@ -343,20 +310,9 @@
             flex-shrink: 0;
         }
 
-        .top-1 .rank {
-            background: gold;
-            color: #000;
-        }
-
-        .top-2 .rank {
-            background: silver;
-            color: #000;
-        }
-
-        .top-3 .rank {
-            background: #cd7f32;
-            color: #000;
-        }
+        .top-1 .rank { background: gold; color: #000; }
+        .top-2 .rank { background: silver; color: #000; }
+        .top-3 .rank { background: #cd7f32; color: #000; }
 
         .player-info {
             flex: 1;
@@ -428,46 +384,27 @@
             gap: 3px;
         }
 
-            .title-senior-brother::before {
-                content: "🤝⚡";
-                margin-right: 5px;
-                animation: seniorEmoji 2s infinite;
-                display: inline-block;
-            }
+        .title-senior-brother::before {
+            content: "🤝⚡";
+            margin-right: 5px;
+            animation: seniorEmoji 2s infinite;
+            display: inline-block;
+        }
 
         @keyframes seniorTitleGlow {
-            0%, 100% {
-                box-shadow: 0 0 15px rgba(147,112,219,0.5);
-            }
-
-            50% {
-                box-shadow: 0 0 25px rgba(255,215,0,0.7);
-            }
+            0%, 100% { box-shadow: 0 0 15px rgba(147,112,219,0.5); }
+            50% { box-shadow: 0 0 25px rgba(255,215,0,0.7); }
         }
 
         @keyframes seniorEmoji {
-            0%, 100% {
-                transform: rotate(0deg);
-            }
-
-            25% {
-                transform: rotate(15deg) scale(1.1);
-            }
-
-            75% {
-                transform: rotate(-15deg) scale(1.1);
-            }
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(15deg) scale(1.1); }
+            75% { transform: rotate(-15deg) scale(1.1); }
         }
 
         @keyframes titleGlow {
-            0%, 100% {
-                opacity: 1;
-            }
-
-            50% {
-                opacity: 0.8;
-                box-shadow: 0 0 20px gold;
-            }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.8; box-shadow: 0 0 20px gold; }
         }
 
         .player-stats {
@@ -477,11 +414,11 @@
             color: #aaa;
         }
 
-            .player-stats span {
-                display: flex;
-                align-items: center;
-                gap: 3px;
-            }
+        .player-stats span {
+            display: flex;
+            align-items: center;
+            gap: 3px;
+        }
 
         .player-score {
             font-weight: bold;
@@ -517,12 +454,12 @@
             overflow-y: auto;
         }
 
-            #matchHistoryBox h3 {
-                margin-bottom: 20px;
-                color: #4a90e2;
-                border-bottom: 1px solid #333;
-                padding-bottom: 10px;
-            }
+        #matchHistoryBox h3 {
+            margin-bottom: 20px;
+            color: #4a90e2;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
 
         .historyItem {
             background: rgba(17, 17, 17, 0.8);
@@ -545,13 +482,13 @@
             box-shadow: 0 20px 40px rgba(0,0,0,0.5);
         }
 
-            .container h2 {
-                font-size: 28px;
-                margin-bottom: 15px;
-                background: linear-gradient(135deg, #fff, #4a90e2);
-                -webkit-background-clip: text;
-                -webkit-text-fill-color: transparent;
-            }
+        .container h2 {
+            font-size: 28px;
+            margin-bottom: 15px;
+            background: linear-gradient(135deg, #fff, #4a90e2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
         #status {
             font-size: 18px;
@@ -583,106 +520,67 @@
             overflow: hidden;
         }
 
-            .cell:hover {
-                border-color: #4a90e2;
-                transform: scale(1.02);
-            }
+        .cell:hover {
+            border-color: #4a90e2;
+            transform: scale(1.02);
+        }
 
-            /* Спецэффекты для клеток */
-            .cell.effect-fire {
-                animation: fireEffect 1.5s infinite;
-            }
+        /* Спецэффекты для клеток */
+        .cell.effect-fire {
+            animation: fireEffect 1.5s infinite;
+        }
 
-            .cell.effect-glow {
-                animation: glowEffect 2s infinite;
-            }
+        .cell.effect-glow {
+            animation: glowEffect 2s infinite;
+        }
 
-            .cell.effect-rainbow {
-                animation: rainbowEffect 3s infinite;
-            }
+        .cell.effect-rainbow {
+            animation: rainbowEffect 3s infinite;
+        }
 
-            .cell.effect-lightning {
-                animation: lightningEffect 2s infinite;
-            }
+        .cell.effect-lightning {
+            animation: lightningEffect 2s infinite;
+        }
 
-            .cell.effect-neon {
-                animation: neonEffect 2.5s infinite;
-            }
+        .cell.effect-neon {
+            animation: neonEffect 2.5s infinite;
+        }
 
-            .cell.effect-matrix {
-                animation: matrixEffect 1s infinite;
-            }
+        .cell.effect-matrix {
+            animation: matrixEffect 1s infinite;
+        }
 
         @keyframes fireEffect {
-            0%, 100% {
-                box-shadow: 0 0 10px #ff6b6b;
-            }
-
-            50% {
-                box-shadow: 0 0 30px #ff4500;
-            }
+            0%, 100% { box-shadow: 0 0 10px #ff6b6b; }
+            50% { box-shadow: 0 0 30px #ff4500; }
         }
 
         @keyframes glowEffect {
-            0%, 100% {
-                box-shadow: 0 0 15px #4a90e2;
-            }
-
-            50% {
-                box-shadow: 0 0 30px #4a90e2, 0 0 15px white;
-            }
+            0%, 100% { box-shadow: 0 0 15px #4a90e2; }
+            50% { box-shadow: 0 0 30px #4a90e2, 0 0 15px white; }
         }
 
         @keyframes rainbowEffect {
-            0% {
-                box-shadow: 0 0 15px #ff0000;
-            }
-
-            25% {
-                box-shadow: 0 0 15px #00ff00;
-            }
-
-            50% {
-                box-shadow: 0 0 15px #0000ff;
-            }
-
-            75% {
-                box-shadow: 0 0 15px #ffff00;
-            }
-
-            100% {
-                box-shadow: 0 0 15px #ff00ff;
-            }
+            0% { box-shadow: 0 0 15px #ff0000; }
+            25% { box-shadow: 0 0 15px #00ff00; }
+            50% { box-shadow: 0 0 15px #0000ff; }
+            75% { box-shadow: 0 0 15px #ffff00; }
+            100% { box-shadow: 0 0 15px #ff00ff; }
         }
 
         @keyframes lightningEffect {
-            0%, 100% {
-                box-shadow: 0 0 10px #ffff00;
-            }
-
-            10% {
-                box-shadow: 0 0 40px #ffff00, 0 0 20px white;
-            }
+            0%, 100% { box-shadow: 0 0 10px #ffff00; }
+            10% { box-shadow: 0 0 40px #ffff00, 0 0 20px white; }
         }
 
         @keyframes neonEffect {
-            0%, 100% {
-                box-shadow: 0 0 15px #00ffff;
-            }
-
-            50% {
-                box-shadow: 0 0 30px #00ffff, 0 0 15px #ff00ff;
-            }
+            0%, 100% { box-shadow: 0 0 15px #00ffff; }
+            50% { box-shadow: 0 0 30px #00ffff, 0 0 15px #ff00ff; }
         }
 
         @keyframes matrixEffect {
-            0% {
-                box-shadow: 0 0 15px #00ff00;
-            }
-
-            50% {
-                box-shadow: 0 0 30px #00ff00, inset 0 0 15px #00ff00;
-            }
+            0% { box-shadow: 0 0 15px #00ff00; }
+            50% { box-shadow: 0 0 30px #00ff00, inset 0 0 15px #00ff00; }
         }
 
         button {
@@ -699,11 +597,11 @@
             outline: none;
         }
 
-            button:hover {
-                background: #4a90e2;
-                transform: translateY(-2px);
-                box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
-            }
+        button:hover {
+            background: #4a90e2;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(74, 144, 226, 0.3);
+        }
 
         #welcomeOverlay {
             position: fixed;
@@ -725,31 +623,31 @@
             box-shadow: 0 30px 60px rgba(74, 144, 226, 0.3);
         }
 
-            #welcomeBox h2 {
-                margin-bottom: 20px;
-                color: #4a90e2;
-                font-size: 32px;
-            }
+        #welcomeBox h2 {
+            margin-bottom: 20px;
+            color: #4a90e2;
+            font-size: 32px;
+        }
 
-            #welcomeBox input {
-                width: 100%;
-                padding: 15px;
-                margin: 10px 0;
-                background: rgba(51, 51, 51, 0.9);
-                border: 2px solid #4a90e2;
-                color: white;
-                border-radius: 50px;
-                font-size: 16px;
-                border: none;
-                outline: none;
-            }
+        #welcomeBox input {
+            width: 100%;
+            padding: 15px;
+            margin: 10px 0;
+            background: rgba(51, 51, 51, 0.9);
+            border: 2px solid #4a90e2;
+            color: white;
+            border-radius: 50px;
+            font-size: 16px;
+            border: none;
+            outline: none;
+        }
 
-            #welcomeBox button {
-                width: 100%;
-                padding: 15px;
-                margin: 8px 0;
-                font-size: 16px;
-            }
+        #welcomeBox button {
+            width: 100%;
+            padding: 15px;
+            margin: 8px 0;
+            font-size: 16px;
+        }
 
         #registerBtn {
             background: linear-gradient(135deg, #27ae60, #2ecc71);
@@ -782,9 +680,9 @@
             color: #999;
         }
 
-            .closeBtn:hover {
-                color: white;
-            }
+        .closeBtn:hover {
+            color: white;
+        }
 
         .stats {
             background: rgba(17, 17, 17, 0.9);
@@ -809,15 +707,15 @@
             flex-wrap: wrap;
         }
 
-            .shopCategory button {
-                flex: 1;
-                min-width: 80px;
-                margin-top: 0;
-            }
+        .shopCategory button {
+            flex: 1;
+            min-width: 80px;
+            margin-top: 0;
+        }
 
-                .shopCategory button.active {
-                    background: #4a90e2;
-                }
+        .shopCategory button.active {
+            background: #4a90e2;
+        }
 
         .shopItem {
             background: rgba(17, 17, 17, 0.9);
@@ -828,9 +726,9 @@
             transition: 0.2s;
         }
 
-            .shopItem:hover {
-                border-color: #4a90e2;
-            }
+        .shopItem:hover {
+            border-color: #4a90e2;
+        }
 
         .shopPreview {
             height: 70px;
@@ -852,22 +750,10 @@
             margin-left: 10px;
         }
 
-        .rarity-common {
-            background: #808080;
-        }
-
-        .rarity-rare {
-            background: #4a90e2;
-        }
-
-        .rarity-epic {
-            background: #9b59b6;
-        }
-
-        .rarity-legendary {
-            background: #f1c40f;
-            color: #000;
-        }
+        .rarity-common { background: #808080; }
+        .rarity-rare { background: #4a90e2; }
+        .rarity-epic { background: #9b59b6; }
+        .rarity-legendary { background: #f1c40f; color: #000; }
 
         .effect-preview {
             width: 100%;
@@ -905,15 +791,15 @@
             font-size: 24px;
         }
 
-            .duel-score span {
-                background: #333;
-                padding: 10px 20px;
-                border-radius: 10px;
-            }
+        .duel-score span {
+            background: #333;
+            padding: 10px 20px;
+            border-radius: 10px;
+        }
 
-            .duel-score .active {
-                background: #4a90e2;
-            }
+        .duel-score .active {
+            background: #4a90e2;
+        }
 
         .duel-waiting {
             text-align: center;
@@ -944,11 +830,9 @@
                 transform: translate(-50%, -50%) scale(0);
                 opacity: 0;
             }
-
             80% {
                 transform: translate(-50%, -50%) scale(1.1);
             }
-
             100% {
                 transform: translate(-50%, -50%) scale(1);
                 opacity: 1;
@@ -979,10 +863,10 @@
             transition: 0.3s;
         }
 
-            .victory-modal button:hover {
-                transform: scale(1.1);
-                box-shadow: 0 0 30px gold;
-            }
+        .victory-modal button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 30px gold;
+        }
 
         /* Админ панель */
         .admin-panel {
@@ -991,42 +875,42 @@
             box-shadow: 0 0 50px rgba(255,0,0,0.3);
         }
 
-            .admin-panel h2 {
-                color: #ffd700;
-                border-bottom: 2px solid #ff0000;
-                padding-bottom: 15px;
-            }
+        .admin-panel h2 {
+            color: #ffd700;
+            border-bottom: 2px solid #ff0000;
+            padding-bottom: 15px;
+        }
 
-            .admin-panel .statItem {
-                background: rgba(40, 40, 50, 0.9);
-            }
+        .admin-panel .statItem {
+            background: rgba(40, 40, 50, 0.9);
+        }
 
-            .admin-panel select, .admin-panel input {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                background: rgba(30, 30, 40, 0.9);
-                border: 2px solid #ff0000;
-                color: white;
-                border-radius: 10px;
-            }
+        .admin-panel select, .admin-panel input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            background: rgba(30, 30, 40, 0.9);
+            border: 2px solid #ff0000;
+            color: white;
+            border-radius: 10px;
+        }
 
-            .admin-panel .admin-btn {
-                background: linear-gradient(135deg, #ff0000, #ffd700);
-                color: white;
-                font-weight: bold;
-                margin: 5px;
-                padding: 10px;
-                border: none;
-                border-radius: 10px;
-                cursor: pointer;
-                transition: 0.3s;
-            }
+        .admin-panel .admin-btn {
+            background: linear-gradient(135deg, #ff0000, #ffd700);
+            color: white;
+            font-weight: bold;
+            margin: 5px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-                .admin-panel .admin-btn:hover {
-                    transform: scale(1.05);
-                    box-shadow: 0 0 20px rgba(255,0,0,0.5);
-                }
+        .admin-panel .admin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(255,0,0,0.5);
+        }
 
         .title-input {
             display: flex;
@@ -1034,14 +918,14 @@
             margin: 10px 0;
         }
 
-            .title-input input {
-                flex: 1;
-                padding: 10px;
-                background: rgba(30, 30, 40, 0.9);
-                border: 2px solid #ff0000;
-                color: white;
-                border-radius: 10px;
-            }
+        .title-input input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(30, 30, 40, 0.9);
+            border: 2px solid #ff0000;
+            color: white;
+            border-radius: 10px;
+        }
 
         .title-preview {
             background: linear-gradient(135deg, #9370db, #ffd700);
@@ -1070,15 +954,15 @@
             border: 2px solid rgba(255, 255, 255, 0.2);
         }
 
-            .donate-btn:hover {
-                transform: scale(1.1);
-                box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
-            }
+        .donate-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.6);
+        }
 
-            .donate-btn i {
-                font-size: 28px;
-                color: #000;
-            }
+        .donate-btn i {
+            font-size: 28px;
+            color: #000;
+        }
 
         .donate-modal {
             position: fixed;
@@ -1100,7 +984,6 @@
                 opacity: 0;
                 transform: translateY(20px);
             }
-
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -1153,9 +1036,9 @@
             transition: 0.2s;
         }
 
-            .donate-amount:hover {
-                background: #4a90e2;
-            }
+        .donate-amount:hover {
+            background: #4a90e2;
+        }
 
         .donate-close {
             position: absolute;
@@ -1166,9 +1049,9 @@
             color: #999;
         }
 
-            .donate-close:hover {
-                color: white;
-            }
+        .donate-close:hover {
+            color: white;
+        }
 
         .copy-btn {
             background: #4a90e2;
@@ -1181,9 +1064,9 @@
             width: 100%;
         }
 
-            .copy-btn:hover {
-                background: #357abd;
-            }
+        .copy-btn:hover {
+            background: #357abd;
+        }
     </style>
 </head>
 <body>
@@ -1211,10 +1094,10 @@
         <h3>Поддержать проект</h3>
         <div style="text-align: center; color: #ffd700; margin-bottom: 10px;">⚡ TON ⚡</div>
         <div class="donate-address" id="tonAddress">UQCnW9n-sf7oqJGhqN91eSpJwqPZ7_dGKiYWJc1PIVCPcWEY</div>
-
+        
         <div style="text-align: center; margin: 15px 0;">
-            <img src="https://quickchart.io/qr?text=UQCnW9n-sf7oqJGhqN91eSpJwqPZ7_dGKiYWJc1PIVCPcWEY&size=200&margin=1&backgroundColor=white"
-                 alt="TON QR Code"
+            <img src="https://quickchart.io/qr?text=UQCnW9n-sf7oqJGhqN91eSpJwqPZ7_dGKiYWJc1PIVCPcWEY&size=200&margin=1&backgroundColor=white" 
+                 alt="TON QR Code" 
                  class="donate-qr"
                  onerror="this.src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNTAiIGhlaWdodD0iMTUwIiB2aWV3Qm94PSIwIDAgMTUwIDE1MCI+PHJlY3Qgd2lkdGg9IjE1MCIgaGVpZ2h0PSIxNTAiIGZpbGw9IiNmZmZmZmYiIC8+PHRleHQgeD0iMTUiIHk9Ijc1IiBmaWxsPSIjMDAwMDAwIiBmb250LWZhbWlseT0iTW9ub3RleHQsIEFyaWFsIiBmb250LXNpemU9IjEwIj5UT048L3RleHQ+PC9zdmc+'">
         </div>
@@ -1226,7 +1109,7 @@
         </div>
 
         <button class="copy-btn" onclick="copyAddress()">📋 Копировать адрес</button>
-
+        
         <p style="text-align: center; margin-top: 15px; font-size: 12px; color: #aaa;">
             Спасибо за поддержку! ❤️
         </p>
@@ -1297,7 +1180,7 @@
         <div class="modalContent admin-panel">
             <div class="closeBtn" onclick="closeAdminPanel()">✖</div>
             <h2>👑 АДМИН ПАНЕЛЬ 👑</h2>
-
+            
             <div class="stats">
                 <div class="statItem">
                     <span>Всего игроков:</span>
@@ -1355,7 +1238,7 @@
             <div id="duelInfo" class="duel-info">
                 <p id="duelMessage"></p>
             </div>
-
+            
             <div id="duelSetup" style="display: none;">
                 <p>Ставка (минимум 15 ⭐):</p>
                 <input type="number" id="betAmount" class="bet-input" value="15" min="15" step="1">
@@ -1451,10 +1334,10 @@
         }
 
         // Закрытие модалки при клике вне её
-        document.addEventListener('click', function (event) {
+        document.addEventListener('click', function(event) {
             const donateBtn = document.querySelector('.donate-btn');
             const donateModal = document.getElementById('donateModal');
-
+            
             if (!donateBtn.contains(event.target) && !donateModal.contains(event.target)) {
                 donateModal.classList.remove('active');
             }
@@ -1464,7 +1347,7 @@
         function showVictoryModal(result, starsEarned) {
             const modal = document.getElementById('victoryModal');
             const message = document.getElementById('victoryMessage');
-
+            
             if (result === 'Победа') {
                 message.innerText = `Вы выиграли! +${starsEarned} ⭐`;
             } else if (result === 'Поражение') {
@@ -1472,9 +1355,9 @@
             } else {
                 message.innerText = `Ничья! +5 ⭐`;
             }
-
+            
             modal.style.display = 'block';
-
+            
             // Автоматически скрыть через 3 секунды
             setTimeout(() => {
                 closeVictoryModal();
@@ -1554,7 +1437,7 @@
             { id: "rainbow_bg", name: "Радуга", category: "background", price: 500, rarity: "legendary", style: "linear-gradient(135deg,#ff9a9e,#fad0c4,#fad0c4)" },
             { id: "matrix_bg", name: "Матрица", category: "background", price: 500, rarity: "legendary", style: "linear-gradient(135deg,#0f0f0f,#0f0f0f), repeating-linear-gradient(0deg, #00ff00, #00ff00 2px, transparent 2px, transparent 4px)" },
             { id: "space_bg", name: "Космос", category: "background", price: 600, rarity: "legendary", style: "radial-gradient(circle at 20% 30%, #1e3c72, #2a5298, #000)" },
-
+            
             // Скины для X (20+ вариантов)
             { id: "default_x", name: "Классический X", category: "xskin", price: 0, rarity: "common", symbol: "❌" },
             { id: "skull_x", name: "Череп", category: "xskin", price: 100, rarity: "common", symbol: "💀" },
@@ -1575,7 +1458,7 @@
             { id: "pumpkin_x", name: "Тыква", category: "xskin", price: 500, rarity: "legendary", symbol: "🎃" },
             { id: "bat_x", name: "Летучая мышь", category: "xskin", price: 500, rarity: "legendary", symbol: "🦇" },
             { id: "spider_x", name: "Паук", category: "xskin", price: 500, rarity: "legendary", symbol: "🕷️" },
-
+            
             // Скины для O (20+ вариантов)
             { id: "default_o", name: "Классический O", category: "oskin", price: 0, rarity: "common", symbol: "⭕" },
             { id: "skull_o", name: "Череп", category: "oskin", price: 100, rarity: "common", symbol: "💀" },
@@ -1598,7 +1481,7 @@
             { id: "spider_o", name: "Паук", category: "oskin", price: 500, rarity: "legendary", symbol: "🕷️" },
             { id: "yin_yang_o", name: "Инь-Янь", category: "oskin", price: 550, rarity: "legendary", symbol: "☯️" },
             { id: "infinity_o", name: "Бесконечность", category: "oskin", price: 550, rarity: "legendary", symbol: "♾️" },
-
+            
             // Спецэффекты (от 150 звезд)
             { id: "effect_fire", name: "Огонь", category: "effect", price: 150, rarity: "rare", class: "effect-fire", preview: "🔥" },
             { id: "effect_glow", name: "Свечение", category: "effect", price: 180, rarity: "rare", class: "effect-glow", preview: "✨" },
@@ -1609,7 +1492,7 @@
         ];
 
         // Загрузка при старте
-        window.onload = function () {
+        window.onload = function() {
             loadPlayerTitles();
             let savedUser = localStorage.getItem('currentUser');
             if (savedUser) {
@@ -1649,7 +1532,7 @@
                     document.getElementById('duelRequest').style.display = 'block';
                     document.getElementById('duelMessage').innerText = 'Вам брошен вызов!';
                     document.getElementById('duelModal').style.display = 'flex';
-
+                    
                     currentDuel = {
                         id: snapshot.key,
                         from: challenge.from,
@@ -1678,15 +1561,21 @@
             });
         }
 
-        // Функция для получения всех пользователей
+        // ===== ИСПРАВЛЕННАЯ ФУНКЦИЯ ДЛЯ ПОЛУЧЕНИЯ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ =====
         function getAllUsers() {
             let users = {};
+            
+            // Проходим по всем ключам localStorage
             for (let i = 0; i < localStorage.length; i++) {
                 const key = localStorage.key(i);
-                if (key.startsWith('pass_')) {
-                    const username = key.replace('pass_', '');
+                
+                // Ищем ключи, которые заканчиваются на '_stars' (это уникальные идентификаторы пользователей)
+                if (key.endsWith('_stars')) {
+                    const username = key.replace('_stars', '');
+                    
+                    // Получаем все данные пользователя
                     users[username] = {
-                        password: localStorage.getItem(key),
+                        password: localStorage.getItem('pass_' + username) || '0000',
                         stars: parseInt(localStorage.getItem(username + '_stars')) || 0,
                         stats: JSON.parse(localStorage.getItem(username + '_stats')) || { wins: 0, losses: 0, draws: 0 },
                         matchHistory: JSON.parse(localStorage.getItem(username + '_history')) || [],
@@ -1697,6 +1586,7 @@
                     };
                 }
             }
+            
             return users;
         }
 
@@ -1736,7 +1626,7 @@
 
             document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
             document.getElementById('profileUsername').innerText = currentUser;
-
+            
             // Показываем кнопку админа только для @Durov
             const adminBtn = document.getElementById('adminBtn');
             if (currentUser === '@Durov') {
@@ -1744,7 +1634,7 @@
             } else {
                 adminBtn.style.display = 'none';
             }
-
+            
             applyBackground();
             applyEffect();
             updateUI();
@@ -1764,14 +1654,14 @@
             localStorage.setItem(currentUser + '_stats', JSON.stringify(stats));
             localStorage.setItem(currentUser + '_owned', JSON.stringify(ownedItems));
             localStorage.setItem(currentUser + '_equipped', JSON.stringify(equipped));
-
+            
             saveToFirebase();
         }
 
         // ===== FIREBASE: ОБЩАЯ ТАБЛИЦА ЛИДЕРОВ =====
         function saveToFirebase() {
             if (!currentUser) return;
-
+            
             database.ref('players/' + currentUser.replace('@', '')).set({
                 username: currentUser,
                 stars: stars,
@@ -1781,15 +1671,15 @@
 
         function loadGlobalLeaderboard() {
             const playersRef = database.ref('players');
-
+            
             playersRef.on('value', (snapshot) => {
                 const data = snapshot.val();
                 const players = [];
-
+                
                 for (let id in data) {
                     players.push(data[id]);
                 }
-
+                
                 updateLeaderboardDisplay(players);
             });
         }
@@ -1800,13 +1690,13 @@
             } else {
                 players.sort((a, b) => b.wins - a.wins);
             }
-
+            
             displayLeaderboard(players);
-
+            
             if (currentUser) {
                 let starsRank = [...players].sort((a, b) => b.stars - a.stars).findIndex(p => p.username === currentUser) + 1;
                 let winsRank = [...players].sort((a, b) => b.wins - a.wins).findIndex(p => p.username === currentUser) + 1;
-
+                
                 document.getElementById('playerRankStars').innerText = starsRank ? `#${starsRank}` : '-';
                 document.getElementById('playerRankWins').innerText = winsRank ? `#${winsRank}` : '-';
             }
@@ -1817,17 +1707,17 @@
             if (playerTitles[username]) {
                 return `<span class="player-title" style="background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);">${playerTitles[username]}</span>`;
             }
-
+            
             // УЛЬТРА КРУТОЙ ТИТУЛ ДЛЯ @Durov
             if (username === '@Durov') {
                 return '<span class="player-title title-admin">👑 АДМИН 👑</span>';
             }
-
+            
             // КРАСИВЫЙ ТИТУЛ ДЛЯ @test - СТ. БРАТ АДМИНА
             if (username === '@test') {
                 return '<span class="player-title title-senior-brother">🤝⚡ СТ. БРАТ АДМИНА</span>';
             }
-
+            
             if (rank === 0) return '<span class="player-title title-legend">👑 Легенда</span>';
             if (rank === 1) return '<span class="player-title title-hero">⚔️ Герой</span>';
             if (rank === 2) return '<span class="player-title title-warrior">🛡️ Воин</span>';
@@ -1836,19 +1726,19 @@
 
         function switchLeaderboard(type) {
             currentLeaderboardType = type;
-
+            
             document.getElementById('tabStars').className = 'tab-btn' + (type === 'stars' ? ' active' : '');
             document.getElementById('tabWins').className = 'tab-btn' + (type === 'wins' ? ' active' : '');
-
+            
             const playersRef = database.ref('players');
             playersRef.once('value', (snapshot) => {
                 const data = snapshot.val();
                 const players = [];
-
+                
                 for (let id in data) {
                     players.push(data[id]);
                 }
-
+                
                 updateLeaderboardDisplay(players);
             });
         }
@@ -1856,50 +1746,50 @@
         function displayLeaderboard(players) {
             const list = document.getElementById('leaderboardList');
             list.innerHTML = '';
-
+            
             players.slice(0, 50).forEach((player, index) => {
                 const div = document.createElement('div');
                 div.className = 'leaderboard-item';
-
+                
                 if (index === 0) div.classList.add('top-1');
                 if (index === 1) div.classList.add('top-2');
                 if (index === 2) div.classList.add('top-3');
-
+                
                 // УЛЬТРА КРУТОЙ СТИЛЬ ДЛЯ @Durov
                 if (player.username === '@Durov') {
                     div.classList.add('admin-user');
                 }
-
+                
                 // КРАСИВЫЙ СТИЛЬ ДЛЯ @test - СТ. БРАТ АДМИНА
                 if (player.username === '@test') {
                     div.classList.add('senior-brother');
                 }
-
+                
                 if (player.username === currentUser) div.classList.add('current-user');
-
+                
                 div.onclick = () => openDuelModal(player.username);
-
+                
                 const title = getPlayerTitle(player.username, index);
                 const displayValue = currentLeaderboardType === 'stars' ? player.stars : player.wins;
-
+                
                 div.innerHTML = `
-                        <div class="rank">#${index + 1}</div>
-                        <div class="player-info">
-                            <div class="player-name">
-                                ${player.username}
-                                ${title}
-                            </div>
-                            <div class="player-stats">
-                                <span>⭐ ${player.stars || 0}</span>
-                                <span>🏆 ${player.wins || 0}</span>
-                            </div>
+                    <div class="rank">#${index + 1}</div>
+                    <div class="player-info">
+                        <div class="player-name">
+                            ${player.username}
+                            ${title}
                         </div>
-                        <div class="player-score">${displayValue}</div>
-                    `;
-
+                        <div class="player-stats">
+                            <span>⭐ ${player.stars || 0}</span>
+                            <span>🏆 ${player.wins || 0}</span>
+                        </div>
+                    </div>
+                    <div class="player-score">${displayValue}</div>
+                `;
+                
                 list.appendChild(div);
             });
-
+            
             document.getElementById('leaderboardCount').innerText = `Всего игроков: ${players.length}`;
         }
 
@@ -1909,12 +1799,12 @@
                 alert('Сначала войдите в аккаунт!');
                 return;
             }
-
+            
             if (opponent === currentUser) {
                 alert('Нельзя вызвать самого себя!');
                 return;
             }
-
+            
             selectedOpponent = opponent;
             document.getElementById('duelMessage').innerText = `Вызов игроку: ${opponent}`;
             document.getElementById('duelSetup').style.display = 'block';
@@ -1936,17 +1826,17 @@
 
         function sendDuelRequest() {
             let bet = parseInt(document.getElementById('betAmount').value);
-
+            
             if (bet < 15) {
                 alert('Минимальная ставка 15 ⭐');
                 return;
             }
-
+            
             if (bet > stars) {
                 alert('Недостаточно ⭐');
                 return;
             }
-
+            
             // Отправляем вызов в Firebase
             const challengeRef = database.ref('challenges').push();
             challengeRef.set({
@@ -1955,9 +1845,9 @@
                 bet: bet,
                 timestamp: Date.now()
             });
-
+            
             sentChallenge = challengeRef.key;
-
+            
             document.getElementById('duelSetup').style.display = 'none';
             document.getElementById('duelWaiting').style.display = 'block';
             document.getElementById('duelMessage').innerText = `Ожидание ответа от ${selectedOpponent}...`;
@@ -1973,13 +1863,13 @@
 
         function acceptDuel() {
             if (!currentDuel) return;
-
+            
             stars -= currentDuel.bet;
-
+            
             // Создаем дуэль в Firebase
             const duelRef = database.ref('duels').push();
             const duelId = duelRef.key;
-
+            
             const duelData = {
                 id: duelId,
                 player1: currentDuel.from,
@@ -1992,14 +1882,14 @@
                 status: 'active',
                 timestamp: Date.now()
             };
-
+            
             duelRef.set(duelData);
-
+            
             database.ref('challenges/' + currentDuel.id).remove();
-
+            
             currentDuel = duelData;
             currentDuel.id = duelId;
-
+            
             startDuelFromFirebase(duelData, duelId);
         }
 
@@ -2014,33 +1904,33 @@
         function startDuelFromFirebase(duelData, duelId) {
             currentDuel = duelData;
             currentDuel.id = duelId;
-
+            
             duelPlayerSymbol = currentUser === duelData.player1 ? 'X' : 'O';
-
+            
             document.getElementById('duelSetup').style.display = 'none';
             document.getElementById('duelWaiting').style.display = 'none';
             document.getElementById('duelRequest').style.display = 'none';
             document.getElementById('duelGame').style.display = 'block';
-
+            
             document.getElementById('player1Score').innerText = duelData.player1Score;
             document.getElementById('player2Score').innerText = duelData.player2Score;
-            document.getElementById('duelStatus').innerText =
+            document.getElementById('duelStatus').innerText = 
                 `⚔️ ${duelData.player1} vs ${duelData.player2} | Ставка: ${duelData.bet} ⭐`;
-
+            
             document.getElementById('duelMessage').innerText = 'Дуэль началась!';
             document.getElementById('duelModal').style.display = 'flex';
-
+            
             createDuelBoard();
         }
 
         function updateDuelFromFirebase(duelData) {
             if (!currentDuel || currentDuel.id !== duelData.id) return;
-
+            
             currentDuel = duelData;
-
+            
             document.getElementById('player1Score').innerText = duelData.player1Score;
             document.getElementById('player2Score').innerText = duelData.player2Score;
-
+            
             createDuelBoard();
         }
 
@@ -2074,16 +1964,16 @@
                 alert('Сейчас не ваш ход!');
                 return;
             }
-
+            
             currentDuel.currentGame[i] = duelPlayerSymbol;
-
+            
             if (checkDuelWin(duelPlayerSymbol)) {
                 if (currentUser === currentDuel.player1) {
                     currentDuel.player1Score++;
                 } else {
                     currentDuel.player2Score++;
                 }
-
+                
                 if (currentDuel.player1Score >= 2 || currentDuel.player2Score >= 2) {
                     endDuel();
                     return;
@@ -2097,15 +1987,15 @@
             } else {
                 currentDuel.turn = currentDuel.turn === currentDuel.player1 ? currentDuel.player2 : currentDuel.player1;
             }
-
+            
             database.ref('duels/' + currentDuel.id).set(currentDuel);
         }
 
         function checkDuelWin(p) {
             const wins = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8],
-                [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                [0, 4, 8], [2, 4, 6]
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
             ];
             return wins.some(combo => combo.every(i => currentDuel.currentGame[i] === p));
         }
@@ -2113,7 +2003,7 @@
         function endDuel() {
             let winner = currentDuel.player1Score > currentDuel.player2Score ? currentDuel.player1 : currentDuel.player2;
             let loser = winner === currentDuel.player1 ? currentDuel.player2 : currentDuel.player1;
-
+            
             if (winner === currentUser) {
                 stars += currentDuel.bet * 2;
                 stats.wins++;
@@ -2124,7 +2014,7 @@
                 matchHistory.push(`⚔️ Дуэль поражение от ${winner} -${currentDuel.bet}⭐ - ${new Date().toLocaleString()}`);
                 showVictoryModal('Поражение', 0);
             }
-
+            
             database.ref('duels/' + currentDuel.id).remove();
             currentDuel = null;
             saveUserData();
@@ -2137,7 +2027,7 @@
                 stars -= currentDuel.bet;
                 stats.losses++;
                 matchHistory.push(`⚔️ Дуэль сдача -${currentDuel.bet}⭐ - ${new Date().toLocaleString()}`);
-
+                
                 database.ref('duels/' + currentDuel.id).remove();
                 currentDuel = null;
                 saveUserData();
@@ -2152,30 +2042,30 @@
             let username = document.getElementById('loginUsername').value.trim();
             let password = document.getElementById('loginPassword').value.trim();
             let errorDiv = document.getElementById('authError');
-
+            
             if (!username || !password) {
                 errorDiv.style.display = 'block';
                 errorDiv.innerText = 'Заполните все поля!';
                 return;
             }
-
+            
             if (password.length !== 4 || isNaN(password)) {
                 errorDiv.style.display = 'block';
                 errorDiv.innerText = 'Пароль должен быть 4 цифры!';
                 return;
             }
-
+            
             if (!username.startsWith('@')) {
                 username = '@' + username;
             }
-
+            
             let existingPass = localStorage.getItem('pass_' + username);
             if (existingPass) {
                 errorDiv.style.display = 'block';
                 errorDiv.innerText = 'Такой пользователь уже существует!';
                 return;
             }
-
+            
             localStorage.setItem('pass_' + username, password);
             currentUser = username;
             stars = 0;
@@ -2185,13 +2075,13 @@
             withdrawEndTime = null;
             ownedItems = ["default_bg", "default_x", "default_o"];
             equipped = { background: "default_bg", xskin: "default_x", oskin: "default_o", effect: null };
-
+            
             saveUserData();
             document.getElementById('welcomeOverlay').style.display = 'none';
             errorDiv.style.display = 'none';
             document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
             document.getElementById('profileUsername').innerText = currentUser;
-
+            
             // Показываем кнопку админа только для @Durov
             const adminBtn = document.getElementById('adminBtn');
             if (currentUser === '@Durov') {
@@ -2199,7 +2089,7 @@
             } else {
                 adminBtn.style.display = 'none';
             }
-
+            
             applyBackground();
             applyEffect();
             updateUI();
@@ -2210,17 +2100,17 @@
             let username = document.getElementById('loginUsername').value.trim();
             let password = document.getElementById('loginPassword').value.trim();
             let errorDiv = document.getElementById('authError');
-
+            
             if (!username || !password) {
                 errorDiv.style.display = 'block';
                 errorDiv.innerText = 'Заполните все поля!';
                 return;
             }
-
+            
             if (!username.startsWith('@')) {
                 username = '@' + username;
             }
-
+            
             let savedPass = localStorage.getItem('pass_' + username);
             if (savedPass === password) {
                 currentUser = username;
@@ -2229,7 +2119,7 @@
                 errorDiv.style.display = 'none';
                 document.getElementById('userDisplay').innerText = '👤 ' + currentUser;
                 document.getElementById('profileUsername').innerText = currentUser;
-
+                
                 // Показываем кнопку админа только для @Durov
                 const adminBtn = document.getElementById('adminBtn');
                 if (currentUser === '@Durov') {
@@ -2259,11 +2149,11 @@
                 alert('❌ Доступ запрещен! Эта панель только для @Durov');
                 return;
             }
-
+            
             // Заполняем список игроков
             const select = document.getElementById('adminPlayerSelect');
             select.innerHTML = '<option value="">Выберите игрока</option>';
-
+            
             const users = getAllUsers();
             for (let username in users) {
                 const option = document.createElement('option');
@@ -2271,7 +2161,7 @@
                 option.textContent = `${username} (⭐ ${users[username].stars || 0})`;
                 select.appendChild(option);
             }
-
+            
             document.getElementById('adminTotalPlayers').innerText = Object.keys(users).length;
             document.getElementById('adminModal').style.display = 'flex';
         }
@@ -2293,23 +2183,23 @@
         function adminAddStars() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             const amount = parseInt(document.getElementById('adminStarsAmount').value);
             if (isNaN(amount) || amount <= 0) {
                 alert('Введите корректное количество!');
                 return;
             }
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 users[username].stars = (users[username].stars || 0) + amount;
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stars = users[username].stars;
                 }
-
+                
                 alert(`✅ Добавлено ${amount} ⭐ игроку ${username}`);
                 updateLeaderboard();
                 updateUI();
@@ -2319,23 +2209,23 @@
         function adminRemoveStars() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             const amount = parseInt(document.getElementById('adminStarsAmount').value);
             if (isNaN(amount) || amount <= 0) {
                 alert('Введите корректное количество!');
                 return;
             }
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 users[username].stars = Math.max(0, (users[username].stars || 0) - amount);
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stars = users[username].stars;
                 }
-
+                
                 alert(`✅ Забрано ${amount} ⭐ у игрока ${username}`);
                 updateLeaderboard();
                 updateUI();
@@ -2345,23 +2235,23 @@
         function adminSetStars() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             const amount = parseInt(document.getElementById('adminStarsAmount').value);
             if (isNaN(amount) || amount < 0) {
                 alert('Введите корректное количество!');
                 return;
             }
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 users[username].stars = amount;
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stars = users[username].stars;
                 }
-
+                
                 alert(`✅ Установлено ${amount} ⭐ для игрока ${username}`);
                 updateLeaderboard();
                 updateUI();
@@ -2371,18 +2261,18 @@
         function adminAddWin() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 if (!users[username].stats) users[username].stats = { wins: 0, losses: 0, draws: 0 };
                 users[username].stats.wins = (users[username].stats.wins || 0) + 1;
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stats = users[username].stats;
                 }
-
+                
                 alert(`✅ Добавлена победа игроку ${username}`);
                 updateLeaderboard();
                 updateUI();
@@ -2392,18 +2282,18 @@
         function adminAddLoss() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 if (!users[username].stats) users[username].stats = { wins: 0, losses: 0, draws: 0 };
                 users[username].stats.losses = (users[username].stats.losses || 0) + 1;
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stats = users[username].stats;
                 }
-
+                
                 alert(`✅ Добавлено поражение игроку ${username}`);
                 updateLeaderboard();
                 updateUI();
@@ -2413,20 +2303,20 @@
         function adminSetTitle() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             const title = document.getElementById('adminTitleText').value.trim();
             if (!title) {
                 alert('Введите титул!');
                 return;
             }
-
+            
             playerTitles[username] = title;
             savePlayerTitles();
-
+            
             // Обновляем предпросмотр
             document.getElementById('titlePreview').innerHTML = title;
             document.getElementById('titlePreview').style.background = 'linear-gradient(135deg, #9370db, #ffd700, #ff6b6b)';
-
+            
             alert(`✅ Титул "${title}" установлен для ${username}`);
             updateLeaderboard();
         }
@@ -2434,14 +2324,14 @@
         function adminRemoveTitle() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             if (playerTitles[username]) {
                 delete playerTitles[username];
                 savePlayerTitles();
-
+                
                 document.getElementById('titlePreview').innerHTML = '👑 ПРЕВЬЮ ТИТУЛА';
                 document.getElementById('titlePreview').style.background = 'linear-gradient(135deg, #9370db, #ffd700)';
-
+                
                 alert(`✅ Титул удален у ${username}`);
                 updateLeaderboard();
             } else {
@@ -2452,19 +2342,19 @@
         function adminResetStats() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             if (!confirm(`Сбросить статистику игрока ${username}?`)) return;
-
+            
             let users = getAllUsers();
             if (users[username]) {
                 users[username].stats = { wins: 0, losses: 0, draws: 0 };
                 saveAllUsers(users);
-
+                
                 // Если это текущий пользователь - обновляем данные
                 if (username === currentUser) {
                     stats = users[username].stats;
                 }
-
+                
                 alert(`✅ Статистика игрока ${username} сброшена`);
                 updateLeaderboard();
                 updateUI();
@@ -2474,17 +2364,17 @@
         function adminDeleteAccount() {
             const username = getSelectedPlayer();
             if (!username) return;
-
+            
             if (username === '@Durov') {
                 alert('❌ Нельзя удалить главного админа!');
                 return;
             }
-
+            
             if (!confirm(`⚠️ ВНИМАНИЕ! Вы действительно хотите удалить аккаунт ${username}?`)) return;
-
+            
             let users = getAllUsers();
             delete users[username];
-
+            
             // Удаляем все данные пользователя
             localStorage.removeItem('pass_' + username);
             localStorage.removeItem(username + '_stars');
@@ -2494,20 +2384,20 @@
             localStorage.removeItem(username + '_stats');
             localStorage.removeItem(username + '_owned');
             localStorage.removeItem(username + '_equipped');
-
+            
             // Удаляем титул если был
             if (playerTitles[username]) {
                 delete playerTitles[username];
                 savePlayerTitles();
             }
-
+            
             saveAllUsers(users);
-
+            
             // Если это текущий пользователь - выходим
             if (username === currentUser) {
                 logout();
             }
-
+            
             alert(`✅ Аккаунт ${username} удален`);
             updateLeaderboard();
             closeAdminPanel();
@@ -2538,40 +2428,40 @@
         function renderShop() {
             let container = document.getElementById('shopItems');
             container.innerHTML = '';
-
+            
             let filtered = shopItems.filter(item => item.category === currentCategory);
-
+            
             filtered.forEach(item => {
                 let div = document.createElement('div');
                 div.className = 'shopItem';
-
+                
                 let rarityClass = 'rarity-' + item.rarity;
-
+                
                 if (item.category === 'background') {
                     div.innerHTML = `
-                            <div class="shopPreview" style="background:${item.style}"></div>
-                            <strong>${item.name}</strong>
-                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
-                            Цена: ${item.price} ⭐<br>
-                        `;
+                        <div class="shopPreview" style="background:${item.style}"></div>
+                        <strong>${item.name}</strong> 
+                        <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                        Цена: ${item.price} ⭐<br>
+                    `;
                 } else if (item.category === 'effect') {
                     div.innerHTML = `
-                            <div class="shopPreview effect-preview ${item.class}">${item.preview}</div>
-                            <strong>${item.name}</strong>
-                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
-                            Цена: ${item.price} ⭐<br>
-                        `;
+                        <div class="shopPreview effect-preview ${item.class}">${item.preview}</div>
+                        <strong>${item.name}</strong> 
+                        <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                        Цена: ${item.price} ⭐<br>
+                    `;
                 } else {
                     div.innerHTML = `
-                            <div class="shopPreview">${item.symbol}</div>
-                            <strong>${item.name}</strong>
-                            <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
-                            Цена: ${item.price} ⭐<br>
-                        `;
+                        <div class="shopPreview">${item.symbol}</div>
+                        <strong>${item.name}</strong> 
+                        <span class="item-rarity ${rarityClass}">${item.rarity}</span><br>
+                        Цена: ${item.price} ⭐<br>
+                    `;
                 }
-
+                
                 let btn = document.createElement('button');
-
+                
                 if (ownedItems.includes(item.id)) {
                     if (equipped[item.category] === item.id) {
                         btn.innerText = '✅ Экипировано';
@@ -2584,7 +2474,7 @@
                     btn.innerText = '💎 Купить';
                     btn.onclick = () => buyItem(item);
                 }
-
+                
                 div.appendChild(btn);
                 container.appendChild(div);
             });
@@ -2595,7 +2485,7 @@
                 alert('❌ Недостаточно ⭐');
                 return;
             }
-
+            
             stars -= item.price;
             ownedItems.push(item.id);
             saveUserData();
@@ -2606,7 +2496,7 @@
 
         function equipItem(item) {
             equipped[item.category] = item.id;
-
+            
             if (item.category === 'background') {
                 applyBackground();
             } else if (item.category === 'effect') {
@@ -2615,7 +2505,7 @@
             } else {
                 createBoard();
             }
-
+            
             saveUserData();
             renderShop();
         }
@@ -2674,10 +2564,10 @@
 
         function playerMove(i) {
             if (board[i] !== '' || gameOver || !currentUser) return;
-
+            
             board[i] = 'X';
             createBoard();
-
+            
             if (checkWin('X')) {
                 stars += 15;
                 stats.wins++;
@@ -2697,12 +2587,12 @@
             for (let i = 0; i < 9; i++) {
                 if (board[i] === '') empty.push(i);
             }
-
+            
             if (empty.length === 0) return;
-
+            
             // AI теперь ходит вторым (O)
             let symbol = 'O';
-
+            
             // 30% шанс на глупый ход
             if (Math.random() < 0.3) {
                 let randomMove = empty[Math.floor(Math.random() * empty.length)];
@@ -2720,7 +2610,7 @@
                 }
                 return;
             }
-
+            
             // Проверка на победу AI
             for (let move of empty) {
                 board[move] = symbol;
@@ -2732,7 +2622,7 @@
                 }
                 board[move] = '';
             }
-
+            
             // Блокировка победы игрока
             for (let move of empty) {
                 board[move] = 'X';
@@ -2748,10 +2638,10 @@
                 }
                 board[move] = '';
             }
-
+            
             // Стратегические ходы
             let priorityMoves = [4, 0, 2, 6, 8, 1, 3, 5, 7];
-
+            
             for (let move of priorityMoves) {
                 if (board[move] === '') {
                     board[move] = symbol;
@@ -2773,9 +2663,9 @@
 
         function checkWin(p) {
             const wins = [
-                [0, 1, 2], [3, 4, 5], [6, 7, 8],
-                [0, 3, 6], [1, 4, 7], [2, 5, 8],
-                [0, 4, 8], [2, 4, 6]
+                [0,1,2], [3,4,5], [6,7,8],
+                [0,3,6], [1,4,7], [2,5,8],
+                [0,4,8], [2,4,6]
             ];
             return wins.some(combo => combo.every(i => board[i] === p));
         }
@@ -2787,14 +2677,14 @@
         function endGame(result) {
             gameOver = true;
             document.getElementById('status').innerText = result;
-
+            
             let starsEarned = 0;
             if (result === 'Победа') {
                 starsEarned = 15;
             } else if (result === 'Ничья') {
                 starsEarned = 5;
             }
-
+            
             matchHistory.push(result + ' - ' + new Date().toLocaleString());
             saveUserData();
             updateUI();
@@ -2860,14 +2750,14 @@
                 alert('❌ Вывод уже запрошен!');
                 return;
             }
-
+            
             stars -= 100;
             withdrawEndTime = Date.now() + 3 * 60 * 60 * 1000;
             withdrawHistory.push('💸 Запрос 100 ⭐ - ' + new Date().toLocaleString());
             saveUserData();
             updateUI();
             checkTimer();
-
+            
             let wh = document.getElementById('withdrawHistory');
             wh.innerHTML = '';
             withdrawHistory.slice(-5).reverse().forEach(w => {
@@ -2880,7 +2770,7 @@
 
         function checkTimer() {
             if (!withdrawEndTime) return;
-
+            
             const timerEl = document.getElementById('withdrawTimer');
             const btn = document.getElementById('withdrawBtn');
 
@@ -2904,5 +2794,4 @@
         }
     </script>
 </body>
-
 </html>
