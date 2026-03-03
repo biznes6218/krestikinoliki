@@ -1552,7 +1552,7 @@
         let gameOver = false;
         let currentLeaderboardType = 'stars';
 
-        // Хранилище титулов
+        // Хранилище титулов (теперь будет синхронизироваться через Firebase)
         let playerTitles = {};
 
         // Данные дуэли
@@ -1656,18 +1656,64 @@
             listenForDuelGames();
             // Добавляем слушатель для обновлений игроков в реальном времени
             listenForPlayerUpdates();
+            // Добавляем слушатель для обновлений титулов
+            listenForTitleUpdates();
         };
 
-        // Загрузка титулов
+        // Загрузка титулов из localStorage
         function loadPlayerTitles() {
             const saved = localStorage.getItem('playerTitles');
             if (saved) {
                 playerTitles = JSON.parse(saved);
             }
+            
+            // Также загружаем титулы из Firebase
+            database.ref('titles').once('value', (snapshot) => {
+                const titles = snapshot.val();
+                if (titles) {
+                    for (let username in titles) {
+                        playerTitles['@' + username] = titles[username];
+                    }
+                    savePlayerTitles();
+                    updateLeaderboard();
+                }
+            });
         }
 
         function savePlayerTitles() {
             localStorage.setItem('playerTitles', JSON.stringify(playerTitles));
+            
+            // Сохраняем в Firebase для синхронизации
+            const titlesRef = database.ref('titles');
+            const titlesForFirebase = {};
+            
+            for (let username in playerTitles) {
+                const cleanUsername = username.replace('@', '');
+                titlesForFirebase[cleanUsername] = playerTitles[username];
+            }
+            
+            titlesRef.set(titlesForFirebase);
+        }
+
+        // Слушатель для обновлений титулов в реальном времени
+        function listenForTitleUpdates() {
+            const titlesRef = database.ref('titles');
+            
+            titlesRef.on('value', (snapshot) => {
+                const titles = snapshot.val();
+                if (titles) {
+                    // Обновляем локальное хранилище
+                    for (let username in titles) {
+                        playerTitles['@' + username] = titles[username];
+                    }
+                    savePlayerTitles();
+                    // Обновляем отображение лидерборда
+                    updateLeaderboard();
+                    
+                    // Показываем уведомление об изменении титула
+                    showNotification('✨ Титулы обновлены!');
+                }
+            });
         }
 
         // Слушаем вызовы на дуэль
@@ -1946,6 +1992,7 @@
         }
 
         function getPlayerTitle(username, rank) {
+            // Проверяем есть ли титул в Firebase/хранилище
             if (playerTitles[username]) {
                 return `<span class="player-title" style="background: linear-gradient(135deg, #9370db, #ffd700, #ff6b6b);">${playerTitles[username]}</span>`;
             }
@@ -2558,14 +2605,23 @@
                 return;
             }
             
+            // Сохраняем в локальное хранилище
             playerTitles[username] = title;
-            savePlayerTitles();
+            savePlayerTitles(); // Эта функция теперь сохраняет и в Firebase
             
             document.getElementById('titlePreview').innerHTML = title;
             document.getElementById('titlePreview').style.background = 'linear-gradient(135deg, #9370db, #ffd700, #ff6b6b)';
             
-            alert(`✅ Титул "${title}" установлен для ${username}`);
+            // Обновляем таблицу лидеров у всех игроков
             updateLeaderboard();
+            
+            // Отправляем уведомление всем через Firebase
+            database.ref('notifications').push({
+                message: `✨ Новый титул "${title}" для ${username} ✨`,
+                timestamp: Date.now()
+            });
+            
+            alert(`✅ Титул "${title}" установлен для ${username} и будет виден всем игрокам!`);
         }
 
         function adminRemoveTitle() {
@@ -2574,13 +2630,21 @@
             
             if (playerTitles[username]) {
                 delete playerTitles[username];
-                savePlayerTitles();
+                savePlayerTitles(); // Сохраняем изменения в Firebase
                 
                 document.getElementById('titlePreview').innerHTML = '👑 ПРЕВЬЮ ТИТУЛА';
                 document.getElementById('titlePreview').style.background = 'linear-gradient(135deg, #9370db, #ffd700)';
                 
-                alert(`✅ Титул удален у ${username}`);
+                // Обновляем таблицу лидеров у всех
                 updateLeaderboard();
+                
+                alert(`✅ Титул удален у ${username} и больше не виден другим игрокам`);
+                
+                // Отправляем уведомление
+                database.ref('notifications').push({
+                    message: `❌ Титул удален у ${username}`,
+                    timestamp: Date.now()
+                });
             } else {
                 alert('У этого игрока нет титула');
             }
